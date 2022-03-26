@@ -1,5 +1,0 @@
-rootProject.name = 'webapp-ohlot'
-
-include ':components:module-ohlot'
-include ':components:module-swagger'
-include ':applications:app-ohlot'
