@@ -1,4 +1,4 @@
-# SyukSyuk-Server
+# SyukSyuk
 행사 관련 티켓 예약 구매 서버
 
 ### 슉슉(Syuk-Syuk)이란
