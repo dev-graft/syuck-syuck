@@ -16,6 +16,13 @@ $ ./gradlew applications:{app-name}:bootRun
 $ ./gradlew applications:app-ohlot:bootRun
 ```
 
+### web application run
+> Node.js must be installed.
+```shell
+$ cd ./applications/web-syuck-syuck
+$ npm start
+```
+
 ### swagger 3.0
 > can configure the port from [applications/app-ohlot/src/resources/application.yml](https://github.com/PCloud63514/webapp-ohlot/blob/main/applications/app-ohlot/src/main/resources/application.yml)
 >
