@@ -330,7 +330,4 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-# web 
-./applications/web-ohlot/node_modules/*
-
 # End of https://www.toptal.com/developers/gitignore/api/macos,intellij,intellij+iml,intellij+all,java,gradle,windows
