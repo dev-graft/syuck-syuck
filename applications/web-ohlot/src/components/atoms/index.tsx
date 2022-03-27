@@ -1,1 +1,1 @@
-export { default as MoveBox } from './moveBox/MoveBox'
+export { default as MoveBox } from './moveBox/MoveBox';

@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 type MoveBoxPros = {
-    text: string
-}
+  text: string;
+};
 
 const MoveBox = (props: MoveBoxPros) => {
-    return (
-        <div>{props.text}</div>
-    )
-}
+  return <div>{props.text}</div>;
+};
 
-export default MoveBox
+export default MoveBox;
