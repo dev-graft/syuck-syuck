@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MemberServiceImplTest {
@@ -53,5 +55,33 @@ class MemberServiceImplTest {
         spyMemberRepository.existsById_returnValue = true;
 
         Assertions.assertThrows(RuntimeException.class, () -> memberService.joinMember(givenMemberJoinRequest));
+    }
+
+    @Test
+    void getMember_passesIdToMemberRepository() {
+        String givenId = "id";
+        spyMemberRepository.findById_returnValue = Optional.of(MemberFixture.anMember().build());
+        memberService.getMember(givenId);
+
+        assertThat(spyMemberRepository.findById_argument).isEqualTo(givenId);
+    }
+
+    @Test
+    void getMember_returnValue() {
+        Member givenMember = MemberFixture.anMember().build();
+        spyMemberRepository.findById_returnValue = Optional.of(givenMember);
+
+        MemberGetResponse response = memberService.getMember(null);
+
+        assertThat(response.getId()).isEqualTo(givenMember.getId());
+        assertThat(response.getNickName()).isEqualTo(givenMember.getNickName());
+        assertThat(response.getGender()).isEqualTo(givenMember.getGender());
+        assertThat(response.getCreateAt()).isEqualTo(givenMember.getCreateAt());
+        assertThat(response.getUpdateAt()).isEqualTo(givenMember.getUpdateAt());
+    }
+
+    @Test
+    void getMember_throwRuntimeException() {
+        Assertions.assertThrows(RuntimeException.class, () -> memberService.getMember(null));
     }
 }
