@@ -30,4 +30,13 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(id).orElseThrow(RuntimeException::new);
         return new MemberGetResponse(member.getId(), member.getNickName(), member.getGender(), member.getCreateAt(), member.getUpdateAt());
     }
+
+    @Override
+    public void modifyMember(MemberModifyRequest request) {
+        memberRepository.findById(request.getId()).orElseThrow(RuntimeException::new);
+
+        // 존재 여부
+        // 이름이 동일할 땐? 예외처리 발생
+        // 업데이트 진행
+    }
 }

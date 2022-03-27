@@ -5,8 +5,10 @@ import org.devgraft.member.service.MemberGetResponse;
 import org.devgraft.member.service.MemberJoinRequest;
 import org.devgraft.member.service.MemberJoinResponse;
 import org.devgraft.member.service.MemberService;
+import org.devgraft.member.service.MemberModifyRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +31,10 @@ public class MemberApi {
     @GetMapping("{id}")
     public MemberGetResponse searchMember(@PathVariable(name = "id") String id) {
         return memberService.getMember(id);
+    }
+
+    @PatchMapping
+    public void updateMember(@RequestBody MemberModifyRequest request) {
+        memberService.modifyMember(request);
     }
 }

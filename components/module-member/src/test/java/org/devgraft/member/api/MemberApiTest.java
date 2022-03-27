@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -104,5 +105,23 @@ class MemberApiTest {
         mockMvc.perform(get("/members/{id}", "id12"));
 
         assertThat(spyMemberService.argument_id).isEqualTo("id12");
+    }
+
+    @Test
+    void updateMember_okHttpStatus() throws Exception {
+        mockMvc.perform(patch("/members")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void updateMember_passesNickNameToMemberService() throws Exception {
+        mockMvc.perform(patch("/members")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"nickName\": \"nickName\", \"id\": \"id\"}"));
+
+        assertThat(spyMemberService.modifyMember_argument.getId()).isEqualTo("id");
+        assertThat(spyMemberService.modifyMember_argument.getNickName()).isEqualTo("nickName");
     }
 }
