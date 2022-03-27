@@ -14,6 +14,8 @@ public class SpyMemberRepository implements MemberRepository {
     public Member save_argument;
     public boolean existsById_returnValue = false;
     public Member save_returnValue = null;
+    public String findById_argument;
+    public Optional<Member> findById_returnValue = Optional.empty();
 
     @Override
     public List<Member> findAll() {
@@ -78,7 +80,8 @@ public class SpyMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findById(String s) {
-        return Optional.empty();
+        findById_argument = s;
+        return findById_returnValue;
     }
 
     @Override

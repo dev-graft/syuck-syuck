@@ -27,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberGetResponse getMember(String id) {
-        return null;
+        Member member = memberRepository.findById(id).orElseThrow(RuntimeException::new);
+        return new MemberGetResponse(member.getId(), member.getNickName(), member.getGender(), member.getCreateAt(), member.getUpdateAt());
     }
 }
