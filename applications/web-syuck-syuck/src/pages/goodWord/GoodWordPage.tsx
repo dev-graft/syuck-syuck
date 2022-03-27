@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios, {AxiosResponse} from 'axios'
+import {MoveBox} from "../../components/atoms";
 
 interface IGoodWord {
     id: string,
@@ -31,9 +32,7 @@ const GoodWordPage = () => {
     return (
         <div>
             {loading && <div>Loading</div>}
-            {/*{goodWords && {*/}
-
-            {/*}}*/}
+            {goodWords && goodWords.map(goodWords => (<MoveBox text={goodWords.content}/>))}
         </div>
     )
 }
