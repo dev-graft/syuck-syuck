@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -98,5 +99,12 @@ class GoodWordApiTest {
 
         assertThat(spyGoodWordService.updateGoodWord_argument.getId()).isEqualTo(givenId);
         assertThat(spyGoodWordService.updateGoodWord_argument.getContent()).isEqualTo(givenUpdateContent);
+    }
+
+    @Test
+    void deleteGoodWord_okHttpStatus() throws Exception {
+        String givenId = "id";
+        mockMvc.perform(delete("/good-words/{id}", givenId))
+                .andExpect(status().isOk());
     }
 }
