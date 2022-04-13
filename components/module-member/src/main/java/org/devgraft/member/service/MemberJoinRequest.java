@@ -30,7 +30,8 @@ public class MemberJoinRequest {
     @Pattern(regexp = "/^[A-Za-z0-9]*$/")
     private String id;
     // 영(소/대) / 특수문자, 숫자 허용
-    @Pattern(regexp = "^.(?=^.{8,20}$)(?=.\\d)(?=.[a-zA-Z])(?=.[!@#$%^&+=]).*$")
+//    @Pattern(regexp = "^.(?=^.{8,20}$)(?=.\\d)(?=.[a-zA-Z])(?=.[!@#$%^&+=]).*$")
+    @Pattern(regexp = "^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*+=.,\\\\\\-<>/;:'~₩]).*$")
     private String password;
     private int gender;
 }
