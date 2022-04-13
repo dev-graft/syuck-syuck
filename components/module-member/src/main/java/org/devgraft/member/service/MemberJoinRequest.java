@@ -24,15 +24,13 @@ import javax.validation.constraints.Size;
 @Getter
 public class MemberJoinRequest {
     // 한, 영(대소문자), 숫자 혀용
-    @Pattern(regexp = "/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/")
-    @Size(min = 2, max = 10)
+    @Pattern(regexp = "/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]*$/")
     private String nickName;
     // 영(소/대) 숫자 허용
-    @Pattern(regexp = "/^[A-Z|a-z|0-9]+$/")
-    @Size(min = 6, max = 20)
+    @Pattern(regexp = "/^[A-Za-z0-9]*$/")
     private String id;
     // 영(소/대) / 특수문자, 숫자 허용
-    @Size(min = 8, max = 20)
+    @Pattern(regexp = "^.(?=^.{8,20}$)(?=.\\d)(?=.[a-zA-Z])(?=.[!@#$%^&+=]).*$")
     private String password;
     private int gender;
 }
