@@ -89,12 +89,14 @@ class MemberServiceImplTest {
     @Test
     void modifyMember_passesIdMemberRepository() {
         String givenId = "id";
+        String givenNickName = "nickName2";
         Member givenMember = MemberFixture.anMember().build();
         spyMemberRepository.findById_returnValue = Optional.of(givenMember);
 
-        memberService.modifyMember(givenId, new MemberModifyRequest("nickName"));
+        memberService.modifyMember(givenId, new MemberModifyRequest(givenNickName));
 
         assertThat(spyMemberRepository.findById_argument).isEqualTo(givenMember.getId());
+        assertThat(spyMemberRepository.save_argument.getNickName()).isEqualTo(givenNickName);
     }
 
     @Test

@@ -37,5 +37,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void modifyMember(String id, MemberModifyRequest request) {
         Member member = memberRepository.findById(id).orElseThrow(RuntimeException::new);
+        member.update(request.getNickName());
+        memberRepository.save(member);
     }
 }

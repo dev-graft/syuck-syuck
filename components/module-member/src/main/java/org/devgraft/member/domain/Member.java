@@ -45,4 +45,8 @@ public class Member {
                 .gender(gender)
                 .build();
     }
+
+    public void update(String nickName) {
+        this.nickName = nickName;
+    }
 }
