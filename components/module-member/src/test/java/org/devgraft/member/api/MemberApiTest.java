@@ -109,7 +109,7 @@ class MemberApiTest {
 
     @Test
     void updateMember_okHttpStatus() throws Exception {
-        mockMvc.perform(patch("/members")
+        mockMvc.perform(patch("/members/{id}", "id")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isOk());
@@ -117,11 +117,12 @@ class MemberApiTest {
 
     @Test
     void updateMember_passesNickNameToMemberService() throws Exception {
-        mockMvc.perform(patch("/members")
+        String givenId = "id";
+        mockMvc.perform(patch("/members/{id}", givenId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"nickName\": \"nickName\", \"id\": \"id\"}"));
+                .content("{\"nickName\": \"nickName\"}"));
 
-        assertThat(spyMemberService.modifyMember_argument.getId()).isEqualTo("id");
-        assertThat(spyMemberService.modifyMember_argument.getNickName()).isEqualTo("nickName");
+        assertThat(spyMemberService.modifyMember_id_argument).isEqualTo("id");
+        assertThat(spyMemberService.modifyMember_request_argument.getNickName()).isEqualTo("nickName");
     }
 }

@@ -88,10 +88,11 @@ class MemberServiceImplTest {
 
     @Test
     void modifyMember_passesIdMemberRepository() {
+        String givenId = "id";
         Member givenMember = MemberFixture.anMember().build();
         spyMemberRepository.findById_returnValue = Optional.of(givenMember);
 
-        memberService.modifyMember(new MemberModifyRequest(givenMember.getId(), "nickName"));
+        memberService.modifyMember(givenId, new MemberModifyRequest("nickName"));
 
         assertThat(spyMemberRepository.findById_argument).isEqualTo(givenMember.getId());
     }
@@ -99,6 +100,6 @@ class MemberServiceImplTest {
     @Test
     void modifyMember_throwRuntimeException() {
         Assertions.assertThrows(RuntimeException.class, () ->
-                memberService.modifyMember(new MemberModifyRequest("givenId", "nickName")));
+                memberService.modifyMember("id", new MemberModifyRequest("nickName")));
     }
 }

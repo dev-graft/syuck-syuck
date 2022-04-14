@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class MemberModifyRequest {
-    private String id;
     private String nickName;
 }

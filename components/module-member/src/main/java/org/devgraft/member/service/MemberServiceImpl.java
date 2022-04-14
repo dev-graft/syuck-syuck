@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.devgraft.member.domain.Member;
 import org.devgraft.member.domain.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -31,12 +33,9 @@ public class MemberServiceImpl implements MemberService {
         return new MemberGetResponse(member.getId(), member.getNickName(), member.getGender(), member.getCreateAt(), member.getUpdateAt());
     }
 
+    @Transactional
     @Override
-    public void modifyMember(MemberModifyRequest request) {
-        memberRepository.findById(request.getId()).orElseThrow(RuntimeException::new);
-
-        // 존재 여부
-        // 이름이 동일할 땐? 예외처리 발생
-        // 업데이트 진행
+    public void modifyMember(String id, MemberModifyRequest request) {
+        Member member = memberRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 }
