@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -23,14 +22,10 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Getter
 public class MemberJoinRequest {
-    // 한, 영(대소문자), 숫자 혀용
-    @Pattern(regexp = "/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]*$/")
+    @Pattern(regexp = "^(?=^.{2,8}$)(?=.*[a-zA-Z가-힣0-9]).*$")
     private String nickName;
-    // 영(소/대) 숫자 허용
-    @Pattern(regexp = "/^[A-Za-z0-9]*$/")
+    @Pattern(regexp = "^(?=^.{6,20}$)(?=.*[a-zA-Z0-9]).*$")
     private String id;
-    // 영(소/대) / 특수문자, 숫자 허용
-//    @Pattern(regexp = "^.(?=^.{8,20}$)(?=.\\d)(?=.[a-zA-Z])(?=.[!@#$%^&+=]).*$")
     @Pattern(regexp = "^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*+=.,\\\\\\-<>/;:'~₩]).*$")
     private String password;
     private int gender;
