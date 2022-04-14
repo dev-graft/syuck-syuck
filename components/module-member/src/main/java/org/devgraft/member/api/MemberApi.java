@@ -22,19 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberApi {
     private final MemberService memberService;
 
+    /**
+     * 회원가입
+     */
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
     public MemberJoinResponse joinMember(@RequestBody MemberJoinRequest request) {
         return memberService.joinMember(request);
     }
 
+    /**
+     * 회원 조회
+     */
     @GetMapping("{id}")
     public MemberGetResponse searchMember(@PathVariable(name = "id") String id) {
         return memberService.getMember(id);
     }
 
-    @PatchMapping
-    public void updateMember(@RequestBody MemberModifyRequest request) {
-        memberService.modifyMember(request);
+    /**
+     * 회원 정보 업데이트
+     */
+    @PatchMapping("{id}")
+    public void updateMember(@PathVariable(name = "id") String id, @RequestBody MemberModifyRequest request) {
+        memberService.modifyMember(id, request);
     }
 }

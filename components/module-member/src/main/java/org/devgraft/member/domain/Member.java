@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
@@ -21,14 +23,15 @@ public class Member {
     private String id;
     private String nickName;
     private String password;
-    private int gender;
+    @Enumerated(EnumType.ORDINAL)
+    private GenderEnum gender;
     @CreatedDate
     private LocalDateTime createAt;
     @LastModifiedDate
     private LocalDateTime updateAt;
 
     @Builder
-    public Member(String id, String nickName, String password, int gender, LocalDateTime createAt, LocalDateTime updateAt) {
+    public Member(String id, String nickName, String password, GenderEnum gender, LocalDateTime createAt, LocalDateTime updateAt) {
         this.id = id;
         this.nickName = nickName;
         this.password = password;
@@ -37,12 +40,16 @@ public class Member {
         this.updateAt = updateAt;
     }
 
-    public static Member create(String id, String password, String nickName, int gender) {
+    public static Member create(String id, String password, String nickName, GenderEnum gender) {
         return Member.builder()
                 .nickName(nickName)
                 .id(id)
                 .password(password)
                 .gender(gender)
                 .build();
+    }
+
+    public void update(String nickName) {
+        this.nickName = nickName;
     }
 }

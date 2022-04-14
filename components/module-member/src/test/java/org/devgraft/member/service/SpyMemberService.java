@@ -6,7 +6,8 @@ public class SpyMemberService implements MemberService {
     public MemberJoinRequest argument_request;
     public String argument_id;
     public MemberGetResponse getMember_returnValue;
-    public MemberModifyRequest modifyMember_argument;
+    public String modifyMember_id_argument;
+    public MemberModifyRequest modifyMember_request_argument;
 
     @Override
     public MemberJoinResponse joinMember(MemberJoinRequest request) {
@@ -21,7 +22,8 @@ public class SpyMemberService implements MemberService {
     }
 
     @Override
-    public void modifyMember(MemberModifyRequest request) {
-        this.modifyMember_argument = request;
+    public void modifyMember(String id, MemberModifyRequest request) {
+        this.modifyMember_id_argument = id;
+        this.modifyMember_request_argument = request;
     }
 }
