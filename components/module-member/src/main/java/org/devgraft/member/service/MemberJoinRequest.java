@@ -26,7 +26,7 @@ public class MemberJoinRequest {
     private String nickName;
     @Pattern(regexp = "^(?=^.{6,20}$)(?=.*[a-zA-Z0-9]).*$")
     private String id;
-    @Pattern(regexp = "^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*+=.,\\\\\\-<>/;:'~₩]).*$")
+    @Pattern(regexp = "^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).*$")
     private String password;
     private int gender;
 }

@@ -1,7 +1,5 @@
 package org.devgraft.auth.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
 import org.devgraft.auth.service.SpyAuthService;
 import org.devgraft.auth.service.TokenGenerateRequest;
 import org.junit.jupiter.api.BeforeEach;
