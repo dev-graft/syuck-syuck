@@ -21,9 +21,22 @@ class AuthApiTest {
         webTestClient.post()
                 .uri("/auth")
                 .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue("{\"roles\": [\"ROLE_TEST\"], \"data\": {\"id\":\"id\"}, \"validity\": 100000, \"refreshValidity\": 1000000}"))
                 .exchange()
                 .expectStatus()
                 .isCreated();
+    }
+
+    @Test
+    void issueToken_returnValue() {
+        webTestClient.post()
+                .uri("/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue("{\"roles\": [\"ROLE_TEST\"], \"data\": {\"id\":\"id\"}, \"validity\": 100000, \"refreshValidity\": 1000000}"))
+                .exchange()
+                .expectBody()
+                .jsonPath("$.accessToken").isEqualTo("accessToken")
+                .jsonPath("$.refreshToken").isEqualTo("refreshToken");
     }
 
     @Test
