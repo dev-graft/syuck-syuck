@@ -1,6 +1,7 @@
 package org.devgraft.auth.api;
 
 import lombok.RequiredArgsConstructor;
+import org.devgraft.auth.service.AuthService;
 import org.devgraft.auth.service.TokenGenerateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -19,9 +20,12 @@ import javax.validation.Valid;
 @RequestMapping("auth")
 @RestController
 public class AuthApi {
+    private final AuthService authService;
+
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
     public Mono<TokenIssueResponse> issueToken(@Valid @RequestBody TokenGenerateRequest request) {
+        authService.generateToken(request);
         return Mono.just(new TokenIssueResponse("accessToken", "refreshToken"));
     }
 
