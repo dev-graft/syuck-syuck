@@ -1,6 +1,7 @@
 package org.devgraft.member.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.devgraft.member.domain.GenderEnum;
 import org.devgraft.member.service.MemberGetResponse;
 import org.devgraft.member.service.MemberJoinRequest;
 import org.devgraft.member.service.SpyMemberService;
@@ -46,7 +47,7 @@ class MemberApiTest {
         String givenNickName = "nickName";
         String givenId = "id";
         String givenPassword = "password";
-        int givenGender = 0;
+        GenderEnum givenGender = GenderEnum.Female;
         MemberJoinRequest givenMemberJoinRequest = new MemberJoinRequest(givenNickName, givenId, givenPassword, givenGender);
 
         mockMvc.perform(post("/members")
@@ -54,7 +55,7 @@ class MemberApiTest {
                         .content(objectMapper.writeValueAsString(givenMemberJoinRequest)))
                 .andExpect(jsonPath("$.nickName", equalTo(givenNickName)))
                 .andExpect(jsonPath("$.id", equalTo(givenId)))
-                .andExpect(jsonPath("$.gender", equalTo(givenGender)))
+                .andExpect(jsonPath("$.gender", equalTo(givenGender.name())))
                 .andExpect(jsonPath("$.createAt", equalTo("2022-03-25 09:32:00")));
     }
 
@@ -63,7 +64,8 @@ class MemberApiTest {
         String givenNickName = "nickName2";
         String givenId = "id";
         String givenPassword = "password";
-        int givenGender = 0;
+        GenderEnum givenGender = GenderEnum.Female;
+
         MemberJoinRequest givenMemberJoinRequest = new MemberJoinRequest(givenNickName, givenId, givenPassword, givenGender);
 
         mockMvc.perform(post("/members")
@@ -87,7 +89,8 @@ class MemberApiTest {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String givenId = "id12";
         String givenNickName = "nickNameaaaa";
-        int givenGender = 0;
+        GenderEnum givenGender = GenderEnum.Female;
+
         LocalDateTime givenCreateAt = LocalDateTime.of(2022, 3, 25, 22, 22, 22);
         LocalDateTime givenUpdateAt = LocalDateTime.of(2023, 2, 2, 22, 22, 22);
         spyMemberService.getMember_returnValue = new MemberGetResponse(givenId, givenNickName, givenGender, givenCreateAt, givenUpdateAt);
@@ -95,7 +98,7 @@ class MemberApiTest {
         mockMvc.perform(get("/members/{id}", givenId))
                 .andExpect(jsonPath("$.id", equalTo(givenId)))
                 .andExpect(jsonPath("$.nickName", equalTo(givenNickName)))
-                .andExpect(jsonPath("$.gender", equalTo(givenGender)))
+                .andExpect(jsonPath("$.gender", equalTo(givenGender.name())))
                 .andExpect(jsonPath("$.createAt", equalTo(givenCreateAt.format(dateTimeFormatter))))
                 .andExpect(jsonPath("$.updateAt", equalTo(givenUpdateAt.format(dateTimeFormatter))));
     }
