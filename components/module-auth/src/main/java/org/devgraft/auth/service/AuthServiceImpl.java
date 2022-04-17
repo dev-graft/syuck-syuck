@@ -19,10 +19,12 @@ public class AuthServiceImpl implements AuthService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final LocalDateTimeProvider localDateTimeProvider;
     private final UuidProvider uuidProvider;
+
     @Override
     public TokenGenerateResponse generateToken(TokenGenerateRequest request) {
         JwtToken jwtToken = jwtTokenProvider.generate(request.getValidity(), request.getRefreshValidity());
         String dataSignKey = uuidProvider.randomUUID().toString();
+
         AuthInformation authInformation = new AuthInformation(
                 request.getRoles(), dataSignKey,
                 request.getValidity(), request.getRefreshValidity(),

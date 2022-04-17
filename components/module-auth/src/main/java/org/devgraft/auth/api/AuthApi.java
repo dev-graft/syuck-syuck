@@ -28,8 +28,8 @@ public class AuthApi {
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
     public Mono<TokenIssueResponse> issueToken(@Valid @RequestBody TokenGenerateRequest request) {
-        TokenGenerateResponse tokenGenerateResponse = authService.generateToken(request);
-        return Mono.just(new TokenIssueResponse("accessToken", "refreshToken"));
+        TokenGenerateResponse response = authService.generateToken(request);
+        return Mono.just(new TokenIssueResponse(response.getAccessToken(), response.getRefreshToken()));
     }
 
     /**

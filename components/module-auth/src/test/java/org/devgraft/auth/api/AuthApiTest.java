@@ -2,6 +2,7 @@ package org.devgraft.auth.api;
 
 import org.devgraft.auth.service.SpyAuthService;
 import org.devgraft.auth.service.TokenGenerateRequest;
+import org.devgraft.auth.service.TokenGenerateResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -45,8 +46,8 @@ class AuthApiTest {
                 .body(BodyInserters.fromValue("{\"roles\": [\"ROLE_TEST\"], \"data\": {\"id\":\"id\"}, \"validity\": 100000, \"refreshValidity\": 1000000}"))
                 .exchange()
                 .expectBody()
-                .jsonPath("$.accessToken").isEqualTo("accessToken")
-                .jsonPath("$.refreshToken").isEqualTo("refreshToken");
+                .jsonPath("$.accessToken").isEqualTo(authService.generateToken_returnValue.getAccessToken())
+                .jsonPath("$.refreshToken").isEqualTo(authService.generateToken_returnValue.getRefreshToken());
     }
 
     @Test
@@ -74,7 +75,11 @@ class AuthApiTest {
     @Test
     void breakToken_okHttpStatus() {
         webTestClient.delete()
-                .uri("/auth/{token}", "token")
+                .uri(uriBuilder ->
+                        uriBuilder.path("/auth")
+                                .queryParam("accessToken", "acc")
+                                .queryParam("refreshToken", "res")
+                                .build())
                 .exchange()
                 .expectStatus()
                 .isOk();
