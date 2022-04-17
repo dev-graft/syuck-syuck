@@ -1,7 +1,7 @@
 package org.devgraft.auth.service;
 
-import org.devgraft.jwt.provider.JwtToken;
-import org.devgraft.jwt.provider.JwtTokenProvider;
+import org.devgraft.auth.jwt.JwtToken;
+import org.devgraft.auth.jwt.JwtTokenProvider;
 
 public class SpyJwtTokenProvider extends JwtTokenProvider {
     public Long generate_validity_argument;

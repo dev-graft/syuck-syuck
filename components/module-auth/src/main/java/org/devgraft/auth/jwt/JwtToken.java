@@ -1,4 +1,4 @@
-package org.devgraft.jwt.provider;
+package org.devgraft.auth.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

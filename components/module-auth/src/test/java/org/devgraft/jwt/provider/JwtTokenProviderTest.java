@@ -3,6 +3,8 @@ package org.devgraft.jwt.provider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.devgraft.auth.jwt.JwtToken;
+import org.devgraft.auth.jwt.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

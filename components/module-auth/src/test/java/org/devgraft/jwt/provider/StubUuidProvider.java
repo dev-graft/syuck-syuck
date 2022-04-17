@@ -1,5 +1,7 @@
 package org.devgraft.jwt.provider;
 
+import org.devgraft.auth.provider.UuidProvider;
+
 import java.util.List;
 import java.util.UUID;
 

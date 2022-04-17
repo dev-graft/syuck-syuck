@@ -1,9 +1,11 @@
-package org.devgraft.jwt.provider;
+package org.devgraft.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.devgraft.auth.provider.DateProvider;
+import org.devgraft.auth.provider.UuidProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
