@@ -14,6 +14,12 @@ public class AuthServiceImpl implements AuthService {
     public TokenGenerateResponse generateToken(TokenGenerateRequest request) {
         JwtToken jwtToken = jwtTokenProvider.generate(request.getValidity(), request.getRefreshValidity());
 
+        // accessToken, refreshToken
+
+        /**
+         *
+         */
+
         return new TokenGenerateResponse(jwtToken.getAccessToken(), jwtToken.getRefreshToken());
     }
 }
