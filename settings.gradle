@@ -3,6 +3,7 @@ rootProject.name = 'syuck-syuck'
 include ':components:module-swagger'
 include ':components:module-member'
 include ':components:module-ohlot'
+include ':components:module-auth'
 
 include ':applications:app-syuck-syuck'
 include ':applications:app-ohlot'
