@@ -3,7 +3,11 @@ package org.devgraft.member.service;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.devgraft.member.domain.GenderEnum;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -26,7 +30,8 @@ public class MemberJoinRequest {
     private String nickName;
     @Pattern(regexp = "^(?=^.{6,20}$)(?=.*[a-zA-Z0-9]).*$")
     private String id;
-    @Pattern(regexp = "^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*+=.,\\\\\\-<>/;:'~₩]).*$")
+    @Pattern(regexp = "^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).*$")
     private String password;
-    private int gender;
+    @Enumerated(EnumType.STRING)
+    private GenderEnum gender;
 }

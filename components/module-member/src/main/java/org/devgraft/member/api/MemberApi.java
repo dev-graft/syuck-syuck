@@ -45,6 +45,5 @@ public class MemberApi {
     @PatchMapping("{id}")
     public void updateMember(@PathVariable(name = "id") String id, @RequestBody MemberModifyRequest request) {
         memberService.modifyMember(id, request);
-
     }
 }
