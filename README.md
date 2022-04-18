@@ -1,22 +1,7 @@
-# WebApp Oh-Lot !!
+# SyukSyuk
 
-### webapp-ohlot clone repository
-```shell
-$ git clone https://github.com/PCloud63514/webapp-ohlot.git {project-path}
-$ cd project-path
-$ git remote remove origin
-```
+> 행사 관련 티켓팅을 슉슉! 예매할 수 있는 서비스! 
 
-### application run
-> Java 11 must be installed.
-```shell
-$ ./gradlew applications:{app-name}:bootRun
+[Team Blog](https://pcloud.tistory.com) 슉슉
 
-// example
-$ ./gradlew applications:app-ohlot:bootRun
-```
-
-### swagger 3.0
-> can configure the port from [applications/app-ohlot/src/resources/application.yml](https://github.com/PCloud63514/webapp-ohlot/blob/main/applications/app-ohlot/src/main/resources/application.yml)
->
-> [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+![image](https://user-images.githubusercontent.com/22608825/163806404-8328eb9b-59b3-4608-8191-b1fc01e2cb60.png)
