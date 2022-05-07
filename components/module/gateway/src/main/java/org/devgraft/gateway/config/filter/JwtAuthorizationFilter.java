@@ -1,10 +1,10 @@
 package org.devgraft.gateway.config.filter;
 
-import org.devgraft.auth.AuthRequestToken;
-import org.devgraft.auth.AuthUtil;
-import org.devgraft.auth.service.AuthDataInformation;
-import org.devgraft.auth.service.AuthService;
-import org.devgraft.auth.service.TokenReIssueResponse;
+import org.devgraft.auth.store.service.AuthDataInformation;
+import org.devgraft.auth.store.service.AuthTokenService;
+import org.devgraft.auth.store.service.TokenReIssueResponse;
+import org.devgraft.auth.util.AuthRequestToken;
+import org.devgraft.auth.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter implements WebFilter {
-    private final AuthService authService;
+    private final AuthTokenService authService;
     private final AuthUtil authUtil;
 
     @Override
