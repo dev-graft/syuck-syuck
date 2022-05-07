@@ -1,12 +1,15 @@
 package org.devgraft.member.service;
 
 import org.devgraft.member.MemberFixture;
+import org.devgraft.member.domain.GenderEnum;
 import org.devgraft.member.domain.Member;
 import org.devgraft.member.domain.SpyMemberRepository;
+import org.devgraft.member.exception.NotFoundMemberException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -103,5 +106,35 @@ class MemberServiceImplTest {
     void modifyMember_throwRuntimeException() {
         Assertions.assertThrows(RuntimeException.class, () ->
                 memberService.modifyMember("id", new MemberModifyRequest("nickName")));
+    }
+
+    @Test
+    void getAuthenticationInfo_returnValue() throws Exception {
+        spyMemberRepository.findById_returnValue = Optional.of(MemberFixture.anMember().build());
+
+        MemberAuthenticationInfoGetResponse response = memberService.getAuthenticationInfo("id");
+
+        assertThat(response.getId()).isEqualTo("id");
+        assertThat(response.getPassword()).isEqualTo("password");
+        assertThat(response.getNickName()).isEqualTo("nickName");
+        assertThat(response.getGender()).isEqualTo(GenderEnum.Female);
+    }
+
+    @Test
+    void getAuthenticationInfo_passesIdToRepository() throws Exception {
+        spyMemberRepository.findById_returnValue = Optional.of(MemberFixture.anMember().build());
+        String givenId = "id";
+
+        memberService.getAuthenticationInfo(givenId);
+
+        assertThat(spyMemberRepository.findById_argument).isEqualTo(givenId);
+    }
+
+    @Test
+    void getAuthenticationInfo_throwNotFoundMemberException() throws Exception {
+
+        Assertions.assertThrows(NotFoundMemberException.class, () ->
+                memberService.getAuthenticationInfo("givenId"));
+
     }
 }
