@@ -21,8 +21,10 @@ public class SshContextListener implements ServletContextListener {
             SshSessionProperties sshSessionProperties = WebApplicationContextUtils.getRequiredWebApplicationContext(sce.getServletContext()).getBean(SshSessionProperties.class);
             SshConnection sshConnection = WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext()).getBean(SshConnection.class);
 
-            for (SshSessionProperty sshSessionProperty : sshSessionProperties.getList()) {
-                sshConnection.connect(sshSessionProperty);
+            if (sshSessionProperties.getList() != null) {
+                for (SshSessionProperty sshSessionProperty : sshSessionProperties.getList()) {
+                    sshConnection.connect(sshSessionProperty);
+                }
             }
         }catch(Exception e) {
             e.printStackTrace();

@@ -12,6 +12,11 @@ public class SshSessionProperty {
      * Session의 이름입니다. 특정 세션을 조회, 종료 등에 쓰입니다. 필수입니다.
      */
     private String sessionName;
+
+    /**
+     * privateKey 입니다. pem 등의 파일 입력 시 경로를 입력하면 됩니다.
+     */
+    private String privateKey;
     /**
      * 연결하고자 하는 호스트 명을 입력하면 됩니다.
      */
