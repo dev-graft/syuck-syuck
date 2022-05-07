@@ -40,8 +40,9 @@ class AuthServiceImplTest {
 
         MemberAuthenticationResponse response = authServiceImpl.authenticationMember(givenRequest, givenCrypt);
 
-        assertThat(response.getId()).isEqualTo(spyMemberClient.getMember_returnValue.getId());
-        assertThat(response.getName()).isEqualTo(spyMemberClient.getMember_returnValue.getName());
+        assertThat(response.getId()).isEqualTo(spyMemberClient.getMemberAuthenticationInfo_returnValue.getId());
+        assertThat(response.getNickName()).isEqualTo(spyMemberClient.getMemberAuthenticationInfo_returnValue.getNickName());
+        assertThat(response.getGender()).isEqualTo(spyMemberClient.getMemberAuthenticationInfo_returnValue.getGender());
     }
 
     @Test
@@ -51,7 +52,7 @@ class AuthServiceImplTest {
 
         authServiceImpl.authenticationMember(givenRequest, givenCrypt);
 
-        assertThat(spyMemberClient.getMember_argument).isEqualTo(givenRequest.getId());
+        assertThat(spyMemberClient.getMemberAuthenticationInfo_argument).isEqualTo(givenRequest.getId());
     }
 
     @Test
@@ -62,7 +63,7 @@ class AuthServiceImplTest {
         authServiceImpl.authenticationMember(givenRequest, givenCrypt);
 
         assertThat(stubSHA256Provider.encrypt_hmac_text_argument)
-                .isEqualTo(Base64.getEncoder().encodeToString(spyMemberClient.getMember_returnValue.getPassword()
+                .isEqualTo(Base64.getEncoder().encodeToString(spyMemberClient.getMemberAuthenticationInfo_returnValue.getPassword()
                         .getBytes(StandardCharsets.UTF_8)));
         assertThat(stubSHA256Provider.encrypt_hmac_crypt_argument).isEqualTo(givenCrypt);
     }

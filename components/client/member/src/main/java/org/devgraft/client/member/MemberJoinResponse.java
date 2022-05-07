@@ -2,21 +2,19 @@ package org.devgraft.client.member;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
-@NoArgsConstructor
+@Builder
 @Getter
-public class MemberGetResponse {
-    private String id;
+public class MemberJoinResponse {
     private String nickName;
+    private String id;
     private GenderEnum gender;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createAt;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateAt;
 }
 

@@ -51,7 +51,7 @@ public class AuthApi {
         MemberAuthenticationResponse response = authService.authenticationMember(request, crypt);
         Map<String, Object> data = new HashMap<>();
         data.put("id", response.getId());
-        data.put("name", response.getName());
+        data.put("name", response.getNickName());
         TokenGenerateRequest tokenGenerateRequest = new TokenGenerateRequest(
                 List.of("ROLE_MEMBER"), data, 60L * 1000L, 7L * 24L * 60L * 60L * 1000L
         );

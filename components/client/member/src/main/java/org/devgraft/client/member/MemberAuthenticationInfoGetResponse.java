@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class MemberGetResponse {
+public class MemberAuthenticationInfoGetResponse {
     private String id;
+    private String password;
     private String nickName;
     private GenderEnum gender;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -19,4 +20,3 @@ public class MemberGetResponse {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateAt;
 }
-

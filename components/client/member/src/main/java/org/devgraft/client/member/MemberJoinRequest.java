@@ -1,26 +1,11 @@
-package org.devgraft.member.service;
+package org.devgraft.client.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.devgraft.member.domain.GenderEnum;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.Pattern;
 
-/**
- *
- * 정규식 특수문자
- * / 정규식 시작
- * ^ 문자열 시작
- * [] 범위
- * A-Z A~Z
- * | or
- * + 앞의 조건이 한번 이상 호출되었는지
- * $ 문자열 끝
- * / 정규식 끝
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -33,3 +18,4 @@ public class MemberJoinRequest {
     private String password;
     private GenderEnum gender;
 }
+
