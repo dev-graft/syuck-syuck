@@ -1,13 +1,27 @@
 rootProject.name = 'syuck-syuck'
 
-include ':components:module:member'
+//support
 include ':components:support:swagger'
 include ':components:support:token'
 include ':components:support:auth-util'
+include ':components:support:simple-provider'
+include ':components:support:crypto'
+include ':components:support:mapper'
+include ':components:support:exception'
+include ':components:support:ssh-connection'
 
+include ':components:module:member'
 include ':components:module:ohlot'
 include ':components:module:gateway'
 include ':components:module:auth'
+include ':components:module:auth-store'
+
+//client
+include ':components:client:member'
 
 include ':applications:app-syuck-syuck'
 include ':applications:app-ohlot'
+include ':applications:app-discovery'
+include ':applications:app-gateway'
+include ':applications:app-auth'
+include ':applications:app-member'

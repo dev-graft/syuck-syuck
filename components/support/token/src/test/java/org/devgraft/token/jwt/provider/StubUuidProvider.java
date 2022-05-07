@@ -1,7 +1,6 @@
 package org.devgraft.token.jwt.provider;
 
 import org.devgraft.token.provider.UuidProvider;
-
 import java.util.List;
 import java.util.UUID;
 

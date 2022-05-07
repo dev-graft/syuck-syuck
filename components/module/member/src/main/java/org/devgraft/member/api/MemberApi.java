@@ -1,6 +1,8 @@
 package org.devgraft.member.api;
 
 import lombok.RequiredArgsConstructor;
+import org.devgraft.member.domain.GenderEnum;
+import org.devgraft.member.service.MemberAuthenticationInfoGetResponse;
 import org.devgraft.member.service.MemberGetResponse;
 import org.devgraft.member.service.MemberJoinRequest;
 import org.devgraft.member.service.MemberJoinResponse;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 
 @RequestMapping("members")
 @RequiredArgsConstructor
@@ -45,5 +49,10 @@ public class MemberApi {
     @PatchMapping("{id}")
     public void updateMember(@PathVariable(name = "id") String id, @RequestBody MemberModifyRequest request) {
         memberService.modifyMember(id, request);
+    }
+
+    @GetMapping("auth/{id}")
+    public MemberAuthenticationInfoGetResponse getMemberAuthenticationInfo(@PathVariable(name = "id") String id) {
+        return memberService.getAuthenticationInfo(id);
     }
 }

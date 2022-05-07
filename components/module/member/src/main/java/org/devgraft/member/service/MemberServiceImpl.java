@@ -1,10 +1,14 @@
 package org.devgraft.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.devgraft.member.domain.GenderEnum;
 import org.devgraft.member.domain.Member;
 import org.devgraft.member.domain.MemberRepository;
+import org.devgraft.member.exception.NotFoundMemberException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -39,5 +43,11 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(id).orElseThrow(RuntimeException::new);
         member.update(request.getNickName());
         memberRepository.save(member);
+    }
+
+    @Override
+    public MemberAuthenticationInfoGetResponse getAuthenticationInfo(String id) {
+        Member member = memberRepository.findById("id").orElseThrow(NotFoundMemberException::new);
+        return new MemberAuthenticationInfoGetResponse(member);
     }
 }

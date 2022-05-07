@@ -128,4 +128,25 @@ class MemberApiTest {
         assertThat(spyMemberService.modifyMember_id_argument).isEqualTo("id");
         assertThat(spyMemberService.modifyMember_request_argument.getNickName()).isEqualTo("nickName");
     }
+
+    @Test
+    void getMemberAuthenticationInfo_okHttpStatus() throws Exception {
+        mockMvc.perform(get("/members/auth/{id}", "id"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getMemberAuthenticationInfo_returnValue() throws Exception {
+        String givenId = "id";
+        mockMvc.perform(get("/members/auth/{id}", givenId))
+                .andExpect(jsonPath("$.id", equalTo(givenId)))
+                .andExpect(jsonPath("$.password", equalTo("password")))
+                .andExpect(jsonPath("$.nickName", equalTo("nickName")))
+                .andExpect(jsonPath("$.gender", equalTo(GenderEnum.Male.name())))
+                .andExpect(jsonPath("$.createAt", equalTo("2022-02-02 10:10:10")))
+                .andExpect(jsonPath("$.updateAt", equalTo("2022-02-02 10:10:10")))
+        ;
+
+        assertThat(spyMemberService.getAuthenticationInfo_argument).isEqualTo(givenId);
+    }
 }
