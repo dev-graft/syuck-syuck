@@ -3,3 +3,4 @@ dependencies {
     implementation(project(':components:module:member'))
     implementation(project(':components:support:swagger'))
 }
+version = '0.0.1'

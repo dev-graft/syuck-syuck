@@ -4,6 +4,7 @@ import org.devgraft.member.MemberFixture;
 import org.devgraft.member.domain.GenderEnum;
 import org.devgraft.member.domain.Member;
 import org.devgraft.member.domain.SpyMemberRepository;
+import org.devgraft.member.exception.ExistMemberException;
 import org.devgraft.member.exception.NotFoundMemberException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,12 +53,12 @@ class MemberServiceImplTest {
     }
 
     @Test
-    void joinMember_throwRuntimeExceptionBySaveOfRepository() {
+    void joinMember_throwExistMemberException() {
         Member givenMember = MemberFixture.anMember().build();
         MemberJoinRequest givenMemberJoinRequest = new MemberJoinRequest(givenMember.getNickName(), givenMember.getId(), givenMember.getPassword(), givenMember.getGender());
         spyMemberRepository.existsById_returnValue = true;
 
-        Assertions.assertThrows(RuntimeException.class, () -> memberService.joinMember(givenMemberJoinRequest));
+        Assertions.assertThrows(ExistMemberException.class, () -> memberService.joinMember(givenMemberJoinRequest));
     }
 
     @Test
