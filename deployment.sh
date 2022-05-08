@@ -99,8 +99,8 @@ function docker_image_deployment() {
   for service in ${READ_SERVICES[@]}; do
     if [[ ${service} =~ app- ]]; then
       echo "${service} docker image build"
-      echo applications/${service}/build/libs
-#      bash docker build -t ${service}:${version} . --build-arg APPLICATION_NAME=${service} --build-arg APP_VERSION=${version}
+      bash ./gradlew applications:${service}:bootJar
+      bash ./gradlew applications:${service}:bootBuildImage
     fi
   done
 }
@@ -114,7 +114,7 @@ echo "[2]. ${MSG_2}"
 echo "[3]. ${MSG_3}"
 echo "[4]. ${MSG_4}"
 echo "[5]. ${MSG_5}"
-echo "[6]. ${MSG_6}"
+#echo "[6]. ${MSG_6}"
 
 # shellcheck disable=SC2162
 read CHOICE
@@ -130,9 +130,9 @@ case ${CHOICE} in
 5)
   docker_image_deployment
   ;;
-6)
-  build_and_docker_image_deployment
-  ;;
+#6)
+#  build_and_docker_image_deployment
+#  ;;
 *)
   echo "Error"
   ;;

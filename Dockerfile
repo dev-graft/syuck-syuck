@@ -3,7 +3,7 @@ FROM openjdk:11
   ARG PROFILE
   ARG APPLICATION_NAME
   ARG APP_VERSION
-  ENV EXPOSE_PORT 8761
+#  ARG EXPOSE_PORT
 
   WORKDIR workspace
 
@@ -14,4 +14,4 @@ FROM openjdk:11
 
   ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=default", "app.jar"]
 
-  EXPOSE $EXPOSE_PORT
+#  EXPOSE $EXPOSE_PORT
