@@ -30,28 +30,26 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins: "*"
-      #      default-filters:
-#        - name: JwtAuthorization
-#          args:
-#            role: ROLE_MEMBER
+      default-filters:
+        - name: Logging
       routes:
         - id: ohlot-service
           uri: lb://ohlot-service
           predicates:
             - Path=/good-words/**
-#        - id: member-service
-#          uri: lb://member-service
-#          predicates:
-#            - Path=/members/joinMember, /members/auth/**
+        - id: member-service
+          uri: lb://member-service
+          predicates:
+            - Path=/members/joinMember, /members/auth/**
         - id: member-service
           uri: lb://member-service
           predicates:
             - Path=/members/**
-#          filters:
-#            - name: JwtAuthorization
-#              args:
-#                roles:
-#                  - ROLE_MEMBER
+          filters:
+            - name: JwtAuthorization
+              args:
+                roles:
+                  - ROLE_MEMBER
 
         - id: auth-service
           uri: lb://auth-service
@@ -79,7 +77,3 @@ support:
   jwt:
     secret-key: secretKey
 
-# components:module:auth-store
-filter:
-  exclude-list:
-    - /auth/**

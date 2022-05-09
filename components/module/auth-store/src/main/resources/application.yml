@@ -17,8 +17,3 @@ spring:
 support:
   jwt:
     secret-key: secretKey
-
-# components:module:auth-store
-filter:
-  exclude-list:
-    - /auth/**
