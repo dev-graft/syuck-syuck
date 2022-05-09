@@ -1,17 +1,16 @@
 FROM openjdk:11
+ARG PROFILE
+ARG APPLICATION_NAME
+ARG APP_VERSION
 
-  ARG PROFILE
-  ARG APPLICATION_NAME
-  ARG APP_VERSION
-#  ARG EXPOSE_PORT
+WORKDIR workspace
 
-  WORKDIR workspace
+CMD ["./gradlew", "applications:$APPLICATION_NAME:clean"]
+CMD ["./gradlew", "applications:$APPLICATION_NAME:bootJar"]
 
-  COPY applications/$APPLICATION_NAME/build/libs/$APPLICATION_NAME-$APP_VERSION.jar /workspace/app.jar
+COPY applications/$APPLICATION_NAME/build/libs/$APPLICATION_NAME-$APP_VERSION.jar /workspace/app.jar
 
-  #RUN apk add --no-cache tzdata
-  #ENV TZ Asia/Seoul
+#RUN apk add --no-cache tzdata
+#ENV TZ Asia/Seoul
 
-  ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=default", "app.jar"]
-
-#  EXPOSE $EXPOSE_PORT
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=default", "app.jar"]

@@ -1,11 +1,11 @@
-package org.devgraft.auth.store.config.filter;
+package org.devgraft.auth.config.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.devgraft.auth.exception.NotAllowUrlPatternException;
+import org.devgraft.auth.exception.NotFoundCryptSessionException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -21,12 +21,14 @@ import java.util.Optional;
 @Component
 public class SessionFilter implements WebFilter {
     private final PathPattern basePattern;
-    private final List<PathPattern> excludePatterns;
+    private final List<PathPattern> allowPatterns;
 
-    public SessionFilter(@Value("${filter.exclude-list:/auth/crypt}") List<String> excludes) {
+    public SessionFilter(@Value("${filter.allow-list:/auth/sha-test/**}") List<String> allows) {
         basePattern = new PathPatternParser().parse("/auth/**");
-        excludePatterns = new ArrayList<>();
-        excludes.forEach(s -> excludePatterns.add(new PathPatternParser().parse(s)));
+        allowPatterns = new ArrayList<>();
+        if (allows != null) {
+            allows.forEach(s -> allowPatterns.add(new PathPatternParser().parse(s)));
+        }
     }
 
     @Override
@@ -34,15 +36,17 @@ public class SessionFilter implements WebFilter {
         ServerHttpRequest request = exchange.getRequest();
         Object address = request.getHeaders().getFirst("X-Forwarded-For") == null ?
                 request.getRemoteAddress() : request.getHeaders().getFirst("X-Forwarded-For");
-        log.info("{} : {} {}", address, request.getMethod(), request.getURI().toString());
+        log.info("{} : {} {}", address, request.getMethod(), request.getURI());
 
-        if (basePattern.matches(request.getPath().pathWithinApplication()) &&
-                excludePatterns.stream().noneMatch(pathPattern -> pathPattern.matches(request.getPath().pathWithinApplication()))) {
+        if (allowPatterns.stream().anyMatch(pathPattern -> pathPattern.matches(request.getPath().pathWithinApplication()))) {
+            return chain.filter(exchange);
+        }
+        if (basePattern.matches(request.getPath().pathWithinApplication())) {
             return exchange.getSession()
                     .doOnNext(webSession -> Optional.ofNullable(webSession.getAttribute("crypt"))
-                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not found session."))
+                            .orElseThrow(NotFoundCryptSessionException::new)
                     ).then(chain.filter(exchange));
         }
-        return chain.filter(exchange);
+        throw new NotAllowUrlPatternException();
     }
 }

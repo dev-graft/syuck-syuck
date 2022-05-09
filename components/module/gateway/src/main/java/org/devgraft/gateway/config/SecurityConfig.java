@@ -1,5 +1,6 @@
 package org.devgraft.gateway.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,10 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @EnableWebFluxSecurity
 public class SecurityConfig {
-    @Value("${white-ip:0:0:0:0:0:0:0:1, 127.0.0.1, 192.168.1.1}")
+    @Value("${white-ip:0:0:0:0:0:0:0:1, 127.0.0.1, 192.168.1.1, 172.17.0.1, 172.23.0.1}")
     List<String> whiteIpList;
 
     @Bean
@@ -43,10 +45,11 @@ public class SecurityConfig {
 
     private Mono<AuthorizationDecision> whiteListIp(Mono<Authentication> authentication, AuthorizationContext context) {
         String ip = Objects.requireNonNull(context.getExchange().getRequest().getRemoteAddress()).getAddress().toString().replace("/", "");
-
+        boolean isContains = whiteIpList.contains(ip);
+        if (!isContains) {
+            log.error("The IP Address does not exist in the whitelist: {}", ip);
+        }
         return authentication.map((a) -> new AuthorizationDecision(a.isAuthenticated()))
-                .defaultIfEmpty(new AuthorizationDecision(
-                        whiteIpList.contains(ip)
-                ));
+                .defaultIfEmpty(new AuthorizationDecision(isContains));
     }
 }

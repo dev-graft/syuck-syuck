@@ -1,0 +1,94 @@
+version: "3.7"
+services:
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - devgraft-net
+  mysql:
+    container_name: mysql
+    platform: linux/amd64
+    image: mysql
+    environment:
+      MYSQL_DATABASE: devgraft_db
+      MYSQL_ROOT_PASSWORD: 463afc
+    ports:
+      - "3306:3306"
+#    volumes:
+#      - /Users/pcloud/workspace/devGraft/db:/var/lib/mysql:rw
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    restart: always
+    networks:
+      - devgraft-net
+  app-discovery:
+    container_name: app-discovery
+    build:
+      context: .
+      args:
+        PROFILE: default
+        APPLICATION_NAME: app-discovery
+        APP_VERSION: 0.0.1
+    image: app-discovery
+    restart: always
+    ports:
+      - "8761:8761"
+    networks:
+      - devgraft-net
+  app-gateway: # 서비스 명
+    container_name: app-gateway # container 이름 & container 생성 시 사용되는 image 이름
+    build:
+      context: .
+      args:
+        PROFILE: default
+        APPLICATION_NAME: app-gateway
+        APP_VERSION: 0.0.1
+    image: app-gateway # image 이름
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+      - app-discovery
+    networks:
+      - devgraft-net
+  app-member:
+    container_name: app-member
+    build:
+      context: .
+      args:
+        PROFILE: default
+        APPLICATION_NAME: app-member
+        APP_VERSION: 0.0.1
+    image: app-member
+    restart: always
+    ports:
+      - "8788:8788"
+    depends_on:
+      - mysql
+      - redis
+      - app-discovery
+    networks:
+      - devgraft-net
+  app-auth:
+    container_name: app-auth
+    build:
+      context: .
+      args:
+        PROFILE: default
+        APPLICATION_NAME: app-auth
+        APP_VERSION: 0.0.1
+    image: app-auth
+    restart: always
+    ports:
+      - "9876:9876"
+    depends_on:
+      - redis
+      - app-discovery
+      - app-member
+    networks:
+      - devgraft-net
+
+networks:
+  devgraft-net:

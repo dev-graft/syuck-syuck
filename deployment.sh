@@ -48,22 +48,18 @@ function build_run() {
 
 function generate_dockerfile() {
   echo "FROM openjdk:11
+ARG PROFILE
+ARG APPLICATION_NAME
+ARG APP_VERSION
 
-  ARG PROFILE
-  ARG APPLICATION_NAME
-  ARG APP_VERSION
-  ENV EXPOSE_PORT 8761
+WORKDIR workspace
 
-  WORKDIR workspace
+COPY applications/\$APPLICATION_NAME/build/libs/\$APPLICATION_NAME-\$APP_VERSION.jar /workspace/app.jar
 
-  COPY applications/\$APPLICATION_NAME/build/libs/\$APPLICATION_NAME-\$APP_VERSION.jar /workspace/app.jar
+#RUN apk add --no-cache tzdata
+#ENV TZ Asia/Seoul
 
-  #RUN apk add --no-cache tzdata
-  #ENV TZ Asia/Seoul
-
-  ENTRYPOINT [\"java\", \"-jar\", \"-Dspring.profiles.active=default\", \"app.jar\"]
-
-  EXPOSE \$EXPOSE_PORT" | tee Dockerfile
+ENTRYPOINT [\"java\", \"-jar\", \"-Dspring.profiles.active=default\", \"app.jar\"]" | tee Dockerfile
   clear
 }
 
@@ -107,6 +103,19 @@ function docker_image_deployment() {
 
 function build_and_docker_image_deployment() {
   echo "[${MSG_6}]"
+  applications_show
+  read_applications
+  # 어디 포트쓰고 어느 버전인지 알 수 있어야함
+  for service in ${READ_SERVICES[@]}; do
+    if [[ ${service} =~ app- ]]; then
+      echo "${service} docker build"
+      bash ./gradlew applications:${service}:clean
+      bash ./gradlew applications:${service}:bootJar
+      docker-compose stop ${service}
+      docker-compose build ${service}
+      docker-compose up -d ${service}
+    fi
+  done
 }
 
 echo "[1]. ${MSG_1}"
@@ -114,7 +123,7 @@ echo "[2]. ${MSG_2}"
 echo "[3]. ${MSG_3}"
 echo "[4]. ${MSG_4}"
 echo "[5]. ${MSG_5}"
-#echo "[6]. ${MSG_6}"
+echo "[6]. ${MSG_6}"
 
 # shellcheck disable=SC2162
 read CHOICE
@@ -130,9 +139,9 @@ case ${CHOICE} in
 5)
   docker_image_deployment
   ;;
-#6)
-#  build_and_docker_image_deployment
-#  ;;
+6)
+  build_and_docker_image_deployment
+  ;;
 *)
   echo "Error"
   ;;

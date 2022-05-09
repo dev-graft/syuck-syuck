@@ -6,7 +6,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://app-discovery:8761/eureka
 
 server:
   port: 8788
@@ -25,7 +25,7 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   datasource:
-    url: jdbc:mysql://localhost:3306/syuck_syuck_db?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://mysql:3306/devgraft_db?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
     password: 463afc
     driver-class-name: com.mysql.cj.jdbc.Driver

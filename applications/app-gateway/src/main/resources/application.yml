@@ -1,12 +1,13 @@
 eureka:
   instance:
+    preferIpAddress: true
     instance-id: gateway-microservice-instance
     appname: gateway-service
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://app-discovery:8761/eureka #host.docker.internal
 
 spring:
   # components:support:swagger
@@ -14,7 +15,7 @@ spring:
     allow-bean-definition-overriding: true
   # components:module:auth-store
   redis:
-    host: localhost
+    host: redis #host.docker.internal
     port: 6379
   session:
     store-type: redis
@@ -25,10 +26,12 @@ spring:
     name: gateway-service
   cloud:
     gateway:
-#      default-filters:
-#        - name: JwtAuthorization
-#          args:
-#            role: ROLE_MEMBER
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+      default-filters:
+        - name: Logging
       routes:
         - id: ohlot-service
           uri: lb://ohlot-service
@@ -37,12 +40,23 @@ spring:
         - id: member-service
           uri: lb://member-service
           predicates:
+            - Path=/members
+            - Method=POST
+        - id: member-service
+          uri: lb://member-service
+          predicates:
             - Path=/members/**
           filters:
+            - name: Exclude
+              args:
+                excludeUrls:
+                  - /members/auth/**
+#                  - ^(/members/auth/)[\S]*$
             - name: JwtAuthorization
               args:
                 roles:
                   - ROLE_MEMBER
+
         - id: auth-service
           uri: lb://auth-service
           predicates:
@@ -69,7 +83,3 @@ support:
   jwt:
     secret-key: secretKey
 
-# components:module:auth-store
-filter:
-  exclude-list:
-    - /auth/**
