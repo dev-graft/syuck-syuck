@@ -103,7 +103,6 @@ function docker_image_deployment() {
 
 function build_and_docker_image_deployment() {
   echo "[${MSG_6}]"
-  generate_dockerfile
   applications_show
   read_applications
   # 어디 포트쓰고 어느 버전인지 알 수 있어야함
@@ -112,9 +111,9 @@ function build_and_docker_image_deployment() {
       echo "${service} docker build"
       bash ./gradlew applications:${service}:clean
       bash ./gradlew applications:${service}:bootJar
-      docker stop ${service}
-      docker rm ${service}
-      docker build -t ${service}:0.0.1 . --build-arg APPLICATION_NAME=${service} --build-arg APP_VERSION=0.0.1
+      docker-compose stop ${service}
+      docker-compose build ${service}
+      docker-compose up -d ${service}
     fi
   done
 }

@@ -40,12 +40,16 @@ spring:
         - id: member-service
           uri: lb://member-service
           predicates:
-            - Path=/members/joinMember, /members/auth/**
+            - Path=/members/joinMember
         - id: member-service
           uri: lb://member-service
           predicates:
             - Path=/members/**
           filters:
+            - name: Exclude
+              args:
+                excludeUrls:
+                  - ^(/members/auth/)[\S]*$
             - name: JwtAuthorization
               args:
                 roles:
