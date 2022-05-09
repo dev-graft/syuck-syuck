@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberAuthenticationInfoGetResponse getAuthenticationInfo(String id) {
-        Member member = memberRepository.findById("id").orElseThrow(NotFoundMemberException::new);
+        Member member = memberRepository.findById(id).orElseThrow(NotFoundMemberException::new);
         return new MemberAuthenticationInfoGetResponse(member);
     }
 }
