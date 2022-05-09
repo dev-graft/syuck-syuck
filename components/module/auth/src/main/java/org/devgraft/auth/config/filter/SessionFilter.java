@@ -23,7 +23,7 @@ public class SessionFilter implements WebFilter {
     private final PathPattern basePattern;
     private final List<PathPattern> allowPatterns;
 
-    public SessionFilter(@Value("${filter.allow-list:/auth/sha-test}") List<String> allows) {
+    public SessionFilter(@Value("${filter.allow-list:/auth/sha-test/**}") List<String> allows) {
         basePattern = new PathPatternParser().parse("/auth/**");
         allowPatterns = new ArrayList<>();
         if (allows != null) {

@@ -40,7 +40,8 @@ spring:
         - id: member-service
           uri: lb://member-service
           predicates:
-            - Path=/members/joinMember
+            - Path=/members
+            - Method=POST
         - id: member-service
           uri: lb://member-service
           predicates:
@@ -49,7 +50,8 @@ spring:
             - name: Exclude
               args:
                 excludeUrls:
-                  - ^(/members/auth/)[\S]*$
+                  - /members/auth/**
+#                  - ^(/members/auth/)[\S]*$
             - name: JwtAuthorization
               args:
                 roles:
