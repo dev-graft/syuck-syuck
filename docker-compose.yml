@@ -69,12 +69,26 @@ services:
       - mysql
       - redis
       - app-discovery
-      - app-gateway
     networks:
       - devgraft-net
-#  app-auth:
-#    container_name: app-auth
-#    image: openjdk:11
+  app-auth:
+    container_name: app-auth
+    build:
+      context: .
+      args:
+        PROFILE: default
+        APPLICATION_NAME: app-auth
+        APP_VERSION: 0.0.1
+    image: app-auth
+    restart: always
+    ports:
+      - "9876:9876"
+    depends_on:
+      - redis
+      - app-discovery
+      - app-member
+    networks:
+      - devgraft-net
 
 networks:
   devgraft-net:

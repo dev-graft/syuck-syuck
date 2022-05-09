@@ -2,6 +2,7 @@ package org.devgraft.auth.api;
 
 import org.devgraft.auth.service.SpyAuthService;
 import org.devgraft.auth.service.SpyAuthTokenService;
+import org.devgraft.crypto.SHA256;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -23,6 +24,7 @@ class AuthApiTest {
 
     @Test
     void authenticationMember_okHttpStatus() throws Exception {
+        System.out.println(SHA256.encrypt("test1"));
         // Test과정에서 WebSession을 어떻게 주입할지 학습이 부족하여 테스트 진행 불가
 //        webTestClient.post()
 //                .uri("/auth/member")

@@ -39,6 +39,10 @@ public class AuthApi {
     private final AuthTokenService authTokenService;
     private final AuthUtil authUtil;
 
+    @GetMapping("sha-test")
+    public Mono<String> shaTest(@RequestParam("pw") String password) {
+        return Mono.just(SHA256.encrypt(password));
+    }
 
     @GetMapping("authTest")
     public Mono<String> authTest(@SessionAttribute("crypt") String crypt, @RequestParam("pw") String password) {
