@@ -32,35 +32,34 @@ spring:
             allowedOrigins: "*"
       default-filters:
         - name: Logging
+        - RewritePath=/(?<path>.*)/v3/api-docs, /v3/api-docs
       routes:
-        - id: ohlot-service
-          uri: lb://ohlot-service
-          predicates:
-            - Path=/good-words/**
-        - id: member-service
-          uri: lb://member-service
-          predicates:
-            - Path=/members
-            - Method=POST
+#        - id: member-service
+#          uri: lb://member-service
+#          predicates:
+#            - Path=/members
+#            - Method=POST
         - id: member-service
           uri: lb://member-service
           predicates:
             - Path=/members/**
-          filters:
-            - name: Exclude
-              args:
-                excludeUrls:
-                  - /members/auth/**
-#                  - ^(/members/auth/)[\S]*$
-            - name: JwtAuthorization
-              args:
-                roles:
-                  - ROLE_MEMBER
+#          filters:
+#            - SwaggerHeader
+#            - StripPrefix=1
+
+#            - name: Exclude
+#              args:
+#                excludeUrls:
+#                  - /members/auth/**
+#            - name: JwtAuthorization
+#              args:
+#                roles:
+#                  - ROLE_MEMBER
 
         - id: auth-service
           uri: lb://auth-service
           predicates:
-            - Path=/auth/**
+            - Path= /auth/**
 
 
 # components:module:gateway

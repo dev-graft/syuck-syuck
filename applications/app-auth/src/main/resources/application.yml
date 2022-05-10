@@ -34,7 +34,7 @@ support:
 # components:module:auth-store
 filter:
   allow-list:
-    - /auth/sha-test
+    - /auth/sha-test/**
 
 # :components:client:member
 client:
