@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Component
@@ -38,7 +40,7 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
             for (PredicateDefinition predicateDefinition : routeDefinition.getPredicates()) {
                 for(String value : predicateDefinition.getArgs().values()) {
                     if (StringUtils.hasText(value)) {
-                        String docsUri = value.substring(0, value.indexOf("/", 1)) + API_URI;
+                        String docsUri = value.substring(0, value.indexOf("/", 1) != -1 ? value.indexOf("/", 1) : value.length() - 1) + API_URI;
                         if (!paths.contains(docsUri)) {
                             paths.add(docsUri);
                             resources.add(swaggerResource(routeDefinition.getId(), docsUri));
