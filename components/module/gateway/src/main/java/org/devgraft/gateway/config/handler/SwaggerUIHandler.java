@@ -1,5 +1,6 @@
 package org.devgraft.gateway.config.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class SwaggerUIHandler  implements HandlerFunction {
     @Autowired(required = false)
@@ -27,6 +29,7 @@ public class SwaggerUIHandler  implements HandlerFunction {
      */
     @Override
     public Mono handle(ServerRequest request) {
+        log.info("SwaggerUIHandler");
         return ServerResponse.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(BodyInserters.fromObject(

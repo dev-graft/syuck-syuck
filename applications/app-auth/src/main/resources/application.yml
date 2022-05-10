@@ -8,7 +8,7 @@ spring:
     allow-bean-definition-overriding: true
   # components:module:auth-store
   redis:
-    host: redis
+    host: localhost
     port: 6379
   session:
     store-type: redis
@@ -23,7 +23,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://app-discovery:8761/eureka
+      defaultZone: http://localhost:8761/eureka
 
 
 # components:support:token
@@ -34,9 +34,9 @@ support:
 # components:module:auth-store
 filter:
   allow-list:
-    - /auth/sha-test
+    - /auth/sha-test/**
 
 # :components:client:member
 client:
   member:
-    url: http://app-member:8788/members
+    url: http://localhost:8788/members

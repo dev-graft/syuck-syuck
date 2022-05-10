@@ -7,7 +7,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://app-discovery:8761/eureka #host.docker.internal
+      defaultZone: http://localhost:8761/eureka #host.docker.internal
 
 spring:
   # components:support:swagger
@@ -15,7 +15,7 @@ spring:
     allow-bean-definition-overriding: true
   # components:module:auth-store
   redis:
-    host: redis #host.docker.internal
+    host: localhost #host.docker.internal
     port: 6379
   session:
     store-type: redis
@@ -32,19 +32,21 @@ spring:
             allowedOrigins: "*"
       default-filters:
         - name: Logging
+        - RewritePath=/(?<path>.*)/v3/api-docs, /v3/api-docs
       routes:
 #        - id: member-service
 #          uri: lb://member-service
 #          predicates:
 #            - Path=/members
 #            - Method=POST
-        - id: member-service
-          uri: lb://member-service
-          predicates:
-            - Path=/members/**
-          filters:
-            - SwaggerHeader
-            - StripPrefix=1
+#        - id: member-service
+#          uri: lb://member-service
+#          predicates:
+#            - Path=/members/**
+#          filters:
+#            - SwaggerHeader
+#            - StripPrefix=1
+
 #            - name: Exclude
 #              args:
 #                excludeUrls:
@@ -57,10 +59,11 @@ spring:
         - id: auth-service
           uri: lb://auth-service
           predicates:
-            - Path=/auth/**
-          filters:
-            - SwaggerHeader
-            - StripPrefix=1
+            - Path=/auth/sha-test, /auth/**
+#            - RewritePath=/auth/(?<path>.*), /$\{path}
+#          filters:
+#            - SwaggerHeader
+#            - StripPrefix=1
 
 
 # components:module:gateway
