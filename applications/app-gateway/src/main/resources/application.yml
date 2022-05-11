@@ -7,7 +7,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka #host.docker.internal
+      defaultZone: http://app-discovery/eureka #host.docker.internal
 
 spring:
   # components:support:swagger
@@ -15,7 +15,7 @@ spring:
     allow-bean-definition-overriding: true
   # components:module:auth-store
   redis:
-    host: localhost #host.docker.internal
+    host: redis
     port: 6379
   session:
     store-type: redis
