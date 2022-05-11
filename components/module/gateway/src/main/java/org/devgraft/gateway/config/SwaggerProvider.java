@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -23,7 +22,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class SwaggerProvider implements SwaggerResourcesProvider {
     public static final String API_URI = "/v3/api-docs";
-    private final RouteLocator routeLocator;
     private final GatewayProperties gatewayProperties;
 
 

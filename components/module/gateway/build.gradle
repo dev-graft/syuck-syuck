@@ -1,6 +1,7 @@
 dependencies {
     implementation(project(':components:module:auth-store'))
     implementation(project(':components:support:swagger'))
+    implementation(project(':components:support:exception'))
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 

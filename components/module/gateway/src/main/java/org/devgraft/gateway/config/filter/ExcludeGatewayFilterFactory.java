@@ -37,7 +37,6 @@ public class ExcludeGatewayFilterFactory extends AbstractGatewayFilterFactory<Ex
             ServerHttpRequest request = exchange.getRequest();
             Object address = request.getHeaders().getFirst("X-Forwarded-For") == null ?
                     request.getRemoteAddress() : request.getHeaders().getFirst("X-Forwarded-For");
-            String path = request.getURI().getPath();
             if (excludePatterns.stream().anyMatch(pathPattern -> pathPattern.matches(request.getPath().pathWithinApplication()))) {
                 log.error("{} : {} {}", address, request.getMethod(), request.getURI());
                 return onError(exchange.getResponse(), "허용되지 않은 접근입니다.", HttpStatus.UNAUTHORIZED);

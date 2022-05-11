@@ -1,5 +1,5 @@
 server:
-  port: 9876
+  port: 80
 spring:
   application:
     name: auth-service
@@ -23,7 +23,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://app-discovery:8761/eureka
+      defaultZone: http://app-discovery/eureka
 
 
 # components:support:token
@@ -39,4 +39,4 @@ filter:
 # :components:client:member
 client:
   member:
-    url: http://app-member:8788/members
+    url: http://app-member/members

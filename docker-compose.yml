@@ -32,8 +32,6 @@ services:
         APP_VERSION: 0.0.1
     image: app-discovery
     restart: always
-    ports:
-      - "8761:8761"
     networks:
       - devgraft-net
   app-gateway: # 서비스 명
@@ -63,8 +61,6 @@ services:
         APP_VERSION: 0.0.1
     image: app-member
     restart: always
-    ports:
-      - "8788:8788"
     depends_on:
       - mysql
       - redis
@@ -81,8 +77,6 @@ services:
         APP_VERSION: 0.0.1
     image: app-auth
     restart: always
-    ports:
-      - "9876:9876"
     depends_on:
       - redis
       - app-discovery
