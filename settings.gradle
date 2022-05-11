@@ -9,6 +9,7 @@ include ':components:support:crypto'
 include ':components:support:mapper'
 include ':components:support:exception'
 include ':components:support:ssh-connection'
+include ':components:support:ssh-connection-reactive'
 
 include ':components:module:member'
 include ':components:module:ohlot'
