@@ -1,12 +1,14 @@
 package org.devgraft.gateway.config.filter;
 
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.devgraft.auth.store.service.AuthDataInformation;
 import org.devgraft.auth.store.service.AuthTokenService;
 import org.devgraft.auth.store.service.TokenReIssueResponse;
 import org.devgraft.auth.util.AuthRequestToken;
 import org.devgraft.auth.util.AuthUtil;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import org.devgraft.gateway.config.attributes.AllowPathAttribute;
+import org.devgraft.gateway.config.exception.UnAuthorizationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -43,6 +45,10 @@ public class JwtAuthorizationGatewayFilterFactory extends AbstractGatewayFilterF
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             ServerHttpResponse response = exchange.getResponse();
+            if (isAllowUri(config, request)) {
+                return chain.filter(exchange);
+            }
+
             AuthRequestToken authRequestToken = authUtil.reactiveExportAuthorization(request);
             if (StringUtils.hasText(authRequestToken.getAccessToken())) {
                 if (StringUtils.hasText(authRequestToken.getRefreshToken())) {
@@ -77,8 +83,23 @@ public class JwtAuthorizationGatewayFilterFactory extends AbstractGatewayFilterF
                             .contextWrite(ReactiveSecurityContextHolder.withAuthentication(authenticationToken));
                 }
             }
-            return onError(response, "인증에 실패하였습니다.", HttpStatus.FORBIDDEN);
+            throw new UnAuthorizationException();
+//            return onError(response, "인증에 실패하였습니다.", HttpStatus.FORBIDDEN);
         };
+    }
+
+    private boolean isAllowUri(Config config, ServerHttpRequest request) {
+        if (config.allowPaths != null) {
+            log.info("count: {}", config.allowPaths.size());
+            for (AllowPathAttribute allowPathAttribute : config.allowPaths) {
+                if (allowPathAttribute.getPath().matches(request.getPath().pathWithinApplication())
+                        && request.getMethod() == allowPathAttribute.getMethod()) {
+                    log.info("path: {} {}", request.getPath(), true);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private AbstractAuthenticationToken createAuthenticationToken(AuthDataInformation authDataInformation) {
@@ -95,5 +116,6 @@ public class JwtAuthorizationGatewayFilterFactory extends AbstractGatewayFilterF
     @Setter
     public static class Config {
         private List<String> roles;
+        private List<AllowPathAttribute> allowPaths;
     }
 }
