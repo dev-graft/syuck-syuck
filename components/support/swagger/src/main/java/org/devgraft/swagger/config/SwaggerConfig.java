@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class SwaggerConfig {
     @Bean
     public ApiSelectorBuilder selectorBuilder() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .ignoredParameterTypes(
                         HttpSession.class,
                         WebSession.class,
