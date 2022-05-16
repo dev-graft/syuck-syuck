@@ -8,6 +8,7 @@ include ':components:support:simple-provider'
 include ':components:support:crypto'
 include ':components:support:mapper'
 include ':components:support:exception'
+include ':components:support:advice-response'
 include ':components:support:ssh-connection'
 include ':components:support:ssh-connection-reactive'
 
