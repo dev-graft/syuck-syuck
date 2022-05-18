@@ -18,6 +18,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.server.EnableRedisWebSession;
+import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.server.session.HeaderWebSessionIdResolver;
 import org.springframework.web.server.session.WebSessionIdResolver;
@@ -32,7 +33,7 @@ public class RedisConfig {
     public String redisHost;
     @Value("${spring.redis.port}")
     private int redisPort;
-    @Value("${spring.redis.password}")
+    @Value("${spring.redis.password:none}")
     private String password;
 
     @Primary
@@ -41,7 +42,7 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(redisHost);
         redisStandaloneConfiguration.setPort(redisPort);
-        if (password != null) {
+        if (StringUtils.hasText(password) && !"none".equals(password)) {
             redisStandaloneConfiguration.setPassword(password);
         }
         return new LettuceConnectionFactory(redisStandaloneConfiguration);

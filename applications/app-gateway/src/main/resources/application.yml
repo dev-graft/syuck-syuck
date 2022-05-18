@@ -7,7 +7,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://app-discovery/eureka #host.docker.internal
+      defaultZone: http://app-discovery/eureka
 
 spring:
   # components:support:swagger
@@ -39,7 +39,7 @@ spring:
               - /members/auth/**
       routes:
 #        - id: member-service
-#          uri: lb://member-service
+#          u  ri: lb://member-service
 #          predicates:
 #            - Path=/members
 #            - Method=POST
@@ -63,7 +63,7 @@ spring:
         - id: auth-service
           uri: lb://auth-service
           predicates:
-            - Path= /auth/**
+            - Path=/auth/**
 
 
 # components:module:gateway

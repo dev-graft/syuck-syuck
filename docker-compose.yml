@@ -45,7 +45,7 @@ services:
     image: app-gateway # image 이름
     restart: always
     ports:
-      - "8080:8080"
+      - "8765:8080"
     depends_on:
       - redis
       - app-discovery
