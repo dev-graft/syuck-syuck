@@ -47,16 +47,16 @@ spring:
           uri: lb://member-service
           predicates:
             - Path=/members/**
-          filters:
-            - name: JwtAuthorization
-              args:
-                roles:
-                  - ROLE_MEMBER
-                allowPaths:
-                  - path: /members
-                    method: POST
-                  - path: /members/v3/api-docs
-                    method: GET
+#          filters:
+#            - name: JwtAuthorization
+#              args:
+#                roles:
+#                  - ROLE_MEMBER
+#                allowPaths:
+#                  - path: /members
+#                    method: POST
+#                  - path: /members/v3/api-docs
+#                    method: GET
 #                  - path: /members/**
 #                    method: GET
 
