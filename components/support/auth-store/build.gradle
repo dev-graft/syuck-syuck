@@ -1,0 +1,8 @@
+dependencies {
+    api(project(":components:support:auth-util"))
+    api(project(":components:support:token"))
+    api(project(":components:support:simple-provider"))
+    api(project(":components:support:mapper"))
+    api(project(":components:support:advice-redis"))
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
