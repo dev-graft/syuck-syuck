@@ -11,6 +11,8 @@ include ':components:support:exception'
 include ':components:support:advice-response'
 include ':components:support:advice-exception'
 include ':components:support:advice-rest-result'
+include ':components:support:advice-redis'
+include ':components:support:auth-store'
 include ':components:support:ssh-connection'
 include ':components:support:ssh-connection-reactive'
 
