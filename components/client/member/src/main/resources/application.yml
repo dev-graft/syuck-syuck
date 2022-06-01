@@ -1,4 +1,0 @@
-# :components:client:member
-client:
-  member:
-    url: http://localhost:8788/members
