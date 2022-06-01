@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ReactiveResponseAdvice.class, ReactiveConfig.class})
+@Import({ReactiveConfig.class })
 public @interface EnableReactiveResponse {
 }

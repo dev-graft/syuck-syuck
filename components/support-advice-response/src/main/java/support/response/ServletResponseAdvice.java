@@ -16,19 +16,18 @@ import org.springframework.web.util.pattern.PathPatternParser;
 import support.CommonResult;
 import support.SingleResult;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @RestControllerAdvice
-public class ResponseAdvice implements ResponseBodyAdvice<Object> {
+public class ServletResponseAdvice implements ResponseBodyAdvice<Object> {
     private final List<PathPattern> whitelist = Arrays.asList(
-            new PathPatternParser().parse("/smartpass/v*/api-docs"),
-            new PathPatternParser().parse("/smartpass/swagger-resources/**"),
-            new PathPatternParser().parse("/smartpass/swagger-ui.html"),
-            new PathPatternParser().parse("/smartpass/webjars/**"),
-            new PathPatternParser().parse("/smartpass/swagger/**"));
+            new PathPatternParser().parse("/v*/api-docs"),
+            new PathPatternParser().parse("/swagger-resources/**"),
+            new PathPatternParser().parse("/swagger-ui.html"),
+            new PathPatternParser().parse("/webjars/**"),
+            new PathPatternParser().parse("/swagger/**"));
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
@@ -49,7 +48,6 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
             return commonResult;
         }
         int status = response instanceof ServletServerHttpResponse ? ((ServletServerHttpResponse) response).getServletResponse().getStatus() : 200;
-        return body != null ? new SingleResult<>(true, status, "Success", LocalDateTime.now(), body) :
-                new CommonResult(true, status, "Success", LocalDateTime.now());
+        return body != null ? SingleResult.success(body, status) : CommonResult.success(status);
     }
 }

@@ -19,4 +19,8 @@ public class SingleResult<T> extends CommonResult {
     public static <T>SingleResult<T> success(T data) {
         return new SingleResult<>(true, 200, "Success", LocalDateTime.now(), data);
     }
+
+    public static <T>SingleResult<T> success(T data, int status) {
+        return new SingleResult<>(true, status, "Success", LocalDateTime.now(), data);
+    }
 }

@@ -1,0 +1,5 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation(project(':components:support-advice-response'))
+    implementation(project(':components:support-mapper'))
+}

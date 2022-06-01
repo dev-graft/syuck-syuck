@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CommonResult {
+public class CommonResult implements Serializable {
     boolean success;
     Integer status;
     String message;
@@ -20,6 +21,10 @@ public class CommonResult {
 
     public static CommonResult success() {
         return new CommonResult(true, 200, "Success", LocalDateTime.now());
+    }
+
+    public static CommonResult success(int status) {
+        return new CommonResult(true, status, "Success", LocalDateTime.now());
     }
 
     public static CommonResult error(HttpStatus errorStatus) {
