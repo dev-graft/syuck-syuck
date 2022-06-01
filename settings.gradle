@@ -1,1 +1,5 @@
 rootProject.name = 'syuck-syuck'
+
+
+include ':components:support-mapper'
+include ':components:support-provider'
