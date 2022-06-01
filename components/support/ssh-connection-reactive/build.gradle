@@ -1,6 +1,0 @@
-dependencies {
-    implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    implementation 'org.springframework.boot:spring-boot-starter-quartz'
-    implementation group: 'net.i2p.crypto', name: 'eddsa', version: '0.1.0'
-    api group: 'com.jcraft', name: 'jsch', version: '0.1.53'
-}

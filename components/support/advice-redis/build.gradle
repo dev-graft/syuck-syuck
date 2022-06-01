@@ -1,7 +1,0 @@
-dependencies {
-    implementation(project(":components:support:simple-provider"))
-    api(project(":components:support:mapper"))
-    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
-    api 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
-}
