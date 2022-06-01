@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import support.CommonResult;
 
-import javax.websocket.DecodeException;
 import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
@@ -36,12 +35,6 @@ public class ExceptionAdvice {
     public Object handleException(Exception e) {
         e.printStackTrace();
         return CommonResult.error(HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(DecodeException.class)
-    public Object handleDecodeException(DecodeException e) {
-        e.printStackTrace();
-        return CommonResult.error(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
