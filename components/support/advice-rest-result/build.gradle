@@ -1,4 +1,0 @@
-dependencies {
-    api(project(':components:support:advice-exception'))
-    api(project(':components:support:advice-response'))
-}
