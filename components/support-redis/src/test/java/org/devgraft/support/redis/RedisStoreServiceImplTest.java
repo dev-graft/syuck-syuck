@@ -29,4 +29,10 @@ class RedisStoreServiceImplTest {
         assertThat(response.getData()).isEqualTo(givenData);
         assertThat(response.getSearchCount()).isEqualTo(0);
     }
+
+    @DisplayName("데이터 추가/패스1")
+    @Test
+    void addData_passesObjectToOpsValue() {
+
+    }
 }
