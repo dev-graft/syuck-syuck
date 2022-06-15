@@ -1,10 +1,18 @@
-package org.devgraft.support.redis;
+package org.devgraft.support.redis.service;
 
 import org.devgraft.support.provider.SpyLocalDateTimeProvider;
+import org.devgraft.support.redis.RedisDataFixture;
+import org.devgraft.support.redis.SpyRedisDataKeyProvider;
+import org.devgraft.support.redis.SpyRedisTemplate;
+import org.devgraft.support.redis.SpyValueOperations;
+import org.devgraft.support.redis.exception.RedisDataNotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -103,5 +111,44 @@ class RedisStoreServiceImplTest {
         assertThat(spyRedisTemplate.expire_key_argument).isEqualTo(givenSearchCode);
         assertThat(spyRedisTemplate.expire_timeout_argument).isEqualTo(givenTimeout);
         assertThat(spyRedisTemplate.expire_timeUnit_argument).isEqualTo(givenTimeUnit);
+    }
+
+    @DisplayName("데이터 조회/결과")
+    @Test
+    void getData_returnValue() {
+        String givenDataSignKey = "searchCode";
+        LocalDateTime givenDateTime = LocalDateTime.now();
+        spyValueOperations.get_returnValue = RedisDataFixture.anRedisData(givenDateTime)
+                .setCreateAt(givenDateTime)
+                .build();
+        spyRedisTemplate.getExpire_returnValue = 1L;
+
+        RedisStoreGetDataResponse<Serializable> response = redisStoreService.getData(givenDataSignKey);
+
+        assertThat(response.getCode()).isEqualTo(givenDataSignKey);
+        assertThat(response.getCreateAt()).isEqualTo(givenDateTime);
+        assertThat(response.getTimeoutAt()).isEqualTo(spyLocalDateTimeProvider.now().plusSeconds(spyRedisTemplate.getExpire_returnValue));
+    }
+
+    @DisplayName("데이터 조회/패스")
+    @Test
+    void getData_passesArgument() {
+        String givenDataSignKey = "searchCode";
+
+        redisStoreService.getData(givenDataSignKey);
+
+        assertThat(spyValueOperations.get_key_argument).isEqualTo(givenDataSignKey);
+    }
+
+    @DisplayName("데이터 조회/예외처리")
+    @Test
+    void getData_throwRedisDataNotFoundException() {
+        String givenDataSignKey = "searchCode";
+
+        spyValueOperations.get_returnValue = null;
+        Assertions.assertThrows(RedisDataNotFoundException.class, () -> redisStoreService.getData(givenDataSignKey));
+        spyValueOperations.get_returnValue = RedisDataFixture.anRedisData("").build();
+        spyRedisTemplate.getExpire_returnValue = null;
+        Assertions.assertThrows(RedisDataNotFoundException.class, () -> redisStoreService.getData(givenDataSignKey));
     }
 }

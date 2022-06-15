@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class SpyValueOperations implements ValueOperations<String, RedisData<?>> {
     public String set_key_argument;
     public Object get_key_argument;
+    public RedisData<?> get_returnValue = RedisDataFixture.anRedisData("test").build();
     public RedisData<?> set_value_argument;
     public long set_timeout_argument;
     public TimeUnit set_timeUnit_argument;
@@ -64,7 +65,7 @@ public class SpyValueOperations implements ValueOperations<String, RedisData<?>>
     @Override
     public RedisData<?> get(Object key) {
         this.get_key_argument = key;
-        return null;
+        return this.get_returnValue;
     }
 
     @Override

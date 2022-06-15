@@ -9,6 +9,8 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.io.Serializable;
+
 
 @Configuration
 public class RedisConfig {
@@ -32,8 +34,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, RedisData<?>> redisTemplate() {
-        RedisTemplate<String, RedisData<?>> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, RedisData<? extends Serializable>> redisTemplate() {
+        RedisTemplate<String, RedisData<? extends Serializable>> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
