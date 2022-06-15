@@ -15,6 +15,7 @@ class RedisStoreServiceImplTest {
     SpyRedisDataKeyProvider spyRedisDataKeyProvider;
     SpyLocalDateTimeProvider spyLocalDateTimeProvider;
     SpyValueOperations spyValueOperations;
+
     @BeforeEach
     void setUp() {
         spyValueOperations = new SpyValueOperations();
@@ -35,10 +36,10 @@ class RedisStoreServiceImplTest {
 
         assertThat(response.getCode()).isEqualTo("code");
         assertThat(response.getCreateAt()).isEqualTo(spyLocalDateTimeProvider.now());
-        assertThat(response.getUpdateAt()).isEqualTo(spyLocalDateTimeProvider.now());
-        assertThat(response.getValiditySeconds()).isEqualTo(givenTimeUnit.toSeconds(givenTimeout));
         assertThat(response.getTimeoutAt()).isEqualTo(response.getCreateAt().plusSeconds(givenTimeUnit.toSeconds(givenTimeout)));
-        assertThat(response.getData()).isEqualTo(givenData);
+        assertThat(response.getData().getSearchCode()).isEqualTo(spyRedisDataKeyProvider.generate());
+        assertThat(response.getData().getData()).isEqualTo(givenData);
+        assertThat(response.getData().getCreatedAt()).isEqualTo(spyLocalDateTimeProvider.now());
     }
 
     @DisplayName("데이터 추가/패스1")
@@ -56,7 +57,51 @@ class RedisStoreServiceImplTest {
         assertThat(spyValueOperations.set_value_argument.getData()).isEqualTo(givenData);
         assertThat(spyValueOperations.set_value_argument.getSearchCode()).isEqualTo(spyRedisDataKeyProvider.generate());
         assertThat(spyValueOperations.set_value_argument.getCreatedAt()).isEqualTo(spyLocalDateTimeProvider.now());
-        assertThat(spyValueOperations.set_value_argument.getUpdateAt()).isEqualTo(spyLocalDateTimeProvider.now());
-        assertThat(spyValueOperations.set_value_argument.getValiditySeconds()).isEqualTo(givenTimeUnit.toSeconds(givenTimeout));
+    }
+
+    @DisplayName("데이터 삭제/결과")
+    @Test
+    void removeData_returnValue() {
+        String givenSearchCode = "searchCode";
+
+        Boolean response = redisStoreService.removeData(givenSearchCode);
+
+        assertThat(response).isFalse();
+    }
+
+    @DisplayName("데이터 삭제/패스1")
+    @Test
+    void removeData_passesSearchCode() {
+        String givenSearchCode = "searchCode";
+
+        redisStoreService.removeData(givenSearchCode);
+
+        assertThat(spyRedisTemplate.delete_key_argument).isEqualTo(givenSearchCode);
+    }
+
+    @DisplayName("만료 시간 재설정/결과")
+    @Test
+    void setExpire_returnValue() {
+        String givenSearchCode = "searchCode";
+        long givenTimeout = 0L;
+        TimeUnit givenTimeUnit = TimeUnit.SECONDS;
+
+        Boolean response = redisStoreService.setExpire(givenSearchCode, givenTimeout, givenTimeUnit);
+
+        assertThat(response).isFalse();
+    }
+
+    @DisplayName("만료 시간 재설정/패스1")
+    @Test
+    void setExpire_passesArgument() {
+        String givenSearchCode = "searchCode";
+        long givenTimeout = 0L;
+        TimeUnit givenTimeUnit = TimeUnit.SECONDS;
+
+        redisStoreService.setExpire(givenSearchCode, givenTimeout, givenTimeUnit);
+
+        assertThat(spyRedisTemplate.expire_key_argument).isEqualTo(givenSearchCode);
+        assertThat(spyRedisTemplate.expire_timeout_argument).isEqualTo(givenTimeout);
+        assertThat(spyRedisTemplate.expire_timeUnit_argument).isEqualTo(givenTimeUnit);
     }
 }

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Base64;
 
 /**
  * variables:
@@ -24,6 +23,4 @@ public class RedisData<T extends Serializable> implements Serializable {
     private String searchCode;
     private T data;
     private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
-    private long validitySeconds;
 }

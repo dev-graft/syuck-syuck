@@ -20,19 +20,18 @@ public class RedisStoreServiceImpl implements RedisStoreService {
     public <T extends Serializable> RedisStoreAddDataResponse<T> addData(T data, long timeout, TimeUnit timeUnit) {
         String generate = redisDataKeyProvider.generate();
         LocalDateTime now = localDateTimeProvider.now();
-        RedisData<T> redisData = new RedisData<>(generate, data, now, now, timeUnit.toSeconds(timeout));
+        RedisData<T> redisData = new RedisData<>(generate, data, now);
         redisTemplate.opsForValue().set(generate, redisData, timeout, timeUnit);
-
-        return RedisStoreAddDataResponse.convert(redisData);
+        return new RedisStoreAddDataResponse<>(generate, redisData, now, now.plusSeconds(timeUnit.toSeconds(timeout)));
     }
 
     @Override
-    public void removeData(String redisDataId) {
-
+    public Boolean removeData(String searchCode) {
+        return redisTemplate.delete(searchCode);
     }
 
     @Override
-    public boolean setExpire(String dataSignKey, long timeout, TimeUnit timeUnit) {
-        return false;
+    public Boolean setExpire(String dataSignKey, long timeout, TimeUnit timeUnit) {
+        return redisTemplate.expire(dataSignKey, timeout, timeUnit);
     }
 }
