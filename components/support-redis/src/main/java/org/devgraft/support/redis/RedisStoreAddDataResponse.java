@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class RedisStoreAddDataResponse<T extends Serializable> {
     private String code;
     private T data;
-    private int searchCount;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
     private LocalDateTime timeoutAt;
@@ -23,7 +22,6 @@ public class RedisStoreAddDataResponse<T extends Serializable> {
         return new RedisStoreAddDataResponse<>(
                 data.getSearchCode(),
                 data.getData(),
-                data.getSearchCount(),
                 data.getCreatedAt(),
                 data.getUpdateAt(),
                 data.getCreatedAt().plusSeconds(data.getValiditySeconds()),

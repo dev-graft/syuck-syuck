@@ -1,5 +1,6 @@
 package org.devgraft.support.redis.config;
 
+import org.devgraft.support.redis.RedisData;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +32,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, RedisData<?>> redisTemplate() {
+        RedisTemplate<String, RedisData<?>> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }

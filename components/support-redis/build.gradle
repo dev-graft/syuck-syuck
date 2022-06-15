@@ -1,5 +1,6 @@
 dependencies {
     implementation(project(":components:support-provider"))
+    testImplementation(testFixtures(project(":components:support-provider")))
     api(project(":components:support-mapper"))
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
     api 'org.springframework.boot:spring-boot-starter-data-redis'
