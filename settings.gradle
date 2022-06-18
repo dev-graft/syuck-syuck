@@ -9,3 +9,4 @@ include ':components:support-redis'
 include ':components:module-chat'
 
 include ':applications:app-test'
+include ':applications:app-chat'
