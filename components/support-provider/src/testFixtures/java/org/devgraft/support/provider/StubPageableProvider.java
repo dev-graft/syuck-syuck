@@ -2,7 +2,7 @@ package org.devgraft.support.provider;
 
 import org.springframework.data.domain.Pageable;
 
-public class SpyPageableProvider extends PageableProvider {
+public class StubPageableProvider extends PageableProvider {
     public Integer pageable_page_argument;
     public Integer pageable_size_argument;
     public Pageable pageable_returnValue = Pageable.unpaged();
