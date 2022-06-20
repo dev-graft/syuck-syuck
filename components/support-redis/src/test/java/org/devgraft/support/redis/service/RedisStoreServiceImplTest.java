@@ -1,8 +1,8 @@
 package org.devgraft.support.redis.service;
 
-import org.devgraft.support.provider.SpyLocalDateTimeProvider;
+import org.devgraft.support.provider.StubLocalDateTimeProvider;
 import org.devgraft.support.redis.RedisDataFixture;
-import org.devgraft.support.redis.SpyRedisDataKeyProvider;
+import org.devgraft.support.redis.StubRedisDataKeyProvider;
 import org.devgraft.support.redis.SpyRedisTemplate;
 import org.devgraft.support.redis.SpyValueOperations;
 import org.devgraft.support.redis.exception.RedisDataNotFoundException;
@@ -20,17 +20,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RedisStoreServiceImplTest {
     RedisStoreServiceImpl redisStoreService;
     SpyRedisTemplate spyRedisTemplate;
-    SpyRedisDataKeyProvider spyRedisDataKeyProvider;
-    SpyLocalDateTimeProvider spyLocalDateTimeProvider;
+    StubRedisDataKeyProvider stubRedisDataKeyProvider;
+    StubLocalDateTimeProvider stubLocalDateTimeProvider;
     SpyValueOperations spyValueOperations;
 
     @BeforeEach
     void setUp() {
         spyValueOperations = new SpyValueOperations();
         spyRedisTemplate = new SpyRedisTemplate(spyValueOperations);
-        spyRedisDataKeyProvider = new SpyRedisDataKeyProvider();
-        spyLocalDateTimeProvider = new SpyLocalDateTimeProvider();
-        redisStoreService = new RedisStoreServiceImpl(spyRedisTemplate, spyRedisDataKeyProvider, spyLocalDateTimeProvider);
+        stubRedisDataKeyProvider = new StubRedisDataKeyProvider();
+        stubLocalDateTimeProvider = new StubLocalDateTimeProvider();
+        redisStoreService = new RedisStoreServiceImpl(spyRedisTemplate, stubRedisDataKeyProvider, stubLocalDateTimeProvider);
     }
 
     @DisplayName("데이터 추가/결과")
@@ -43,11 +43,11 @@ class RedisStoreServiceImplTest {
         RedisStoreAddDataResponse<String> response = redisStoreService.addData(givenData, givenTimeout, givenTimeUnit);
 
         assertThat(response.getCode()).isEqualTo("code");
-        assertThat(response.getCreateAt()).isEqualTo(spyLocalDateTimeProvider.now());
+        assertThat(response.getCreateAt()).isEqualTo(stubLocalDateTimeProvider.now());
         assertThat(response.getTimeoutAt()).isEqualTo(response.getCreateAt().plusSeconds(givenTimeUnit.toSeconds(givenTimeout)));
-        assertThat(response.getData().getSearchCode()).isEqualTo(spyRedisDataKeyProvider.generate());
+        assertThat(response.getData().getSearchCode()).isEqualTo(stubRedisDataKeyProvider.generate());
         assertThat(response.getData().getData()).isEqualTo(givenData);
-        assertThat(response.getData().getCreatedAt()).isEqualTo(spyLocalDateTimeProvider.now());
+        assertThat(response.getData().getCreatedAt()).isEqualTo(stubLocalDateTimeProvider.now());
     }
 
     @DisplayName("데이터 추가/패스1")
@@ -59,12 +59,12 @@ class RedisStoreServiceImplTest {
 
         redisStoreService.addData(givenData, givenTimeout, givenTimeUnit);
 
-        assertThat(spyValueOperations.set_key_argument).isEqualTo(spyRedisDataKeyProvider.generate());
+        assertThat(spyValueOperations.set_key_argument).isEqualTo(stubRedisDataKeyProvider.generate());
         assertThat(spyValueOperations.set_timeout_argument).isEqualTo(givenTimeout);
         assertThat(spyValueOperations.set_timeUnit_argument).isEqualTo(givenTimeUnit);
         assertThat(spyValueOperations.set_value_argument.getData()).isEqualTo(givenData);
-        assertThat(spyValueOperations.set_value_argument.getSearchCode()).isEqualTo(spyRedisDataKeyProvider.generate());
-        assertThat(spyValueOperations.set_value_argument.getCreatedAt()).isEqualTo(spyLocalDateTimeProvider.now());
+        assertThat(spyValueOperations.set_value_argument.getSearchCode()).isEqualTo(stubRedisDataKeyProvider.generate());
+        assertThat(spyValueOperations.set_value_argument.getCreatedAt()).isEqualTo(stubLocalDateTimeProvider.now());
     }
 
     @DisplayName("데이터 삭제/결과")
@@ -127,7 +127,7 @@ class RedisStoreServiceImplTest {
 
         assertThat(response.getCode()).isEqualTo(givenDataSignKey);
         assertThat(response.getCreateAt()).isEqualTo(givenDateTime);
-        assertThat(response.getTimeoutAt()).isEqualTo(spyLocalDateTimeProvider.now().plusSeconds(spyRedisTemplate.getExpire_returnValue));
+        assertThat(response.getTimeoutAt()).isEqualTo(stubLocalDateTimeProvider.now().plusSeconds(spyRedisTemplate.getExpire_returnValue));
     }
 
     @DisplayName("데이터 조회/패스")
