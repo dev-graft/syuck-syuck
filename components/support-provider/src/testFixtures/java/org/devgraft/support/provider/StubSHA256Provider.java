@@ -1,6 +1,6 @@
 package org.devgraft.support.provider;
 
-public class SpySHA256Provider extends SHA256Provider {
+public class StubSHA256Provider extends SHA256Provider {
     public String encrypt_text_argument;
     public String encrypt_hKey_argument;
     public String encrypt_returnValue = "encrypt";
