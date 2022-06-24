@@ -1,7 +1,6 @@
-package org.devgraft.support.token.jwt.domain;
+package org.devgraft.support.jwt;
 
 import lombok.Getter;
-import org.devgraft.support.token.domain.Token;
 
 @Getter
 public class JwtToken extends Token<JwtTokenInformation> {

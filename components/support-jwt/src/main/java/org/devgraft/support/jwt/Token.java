@@ -1,4 +1,4 @@
-package org.devgraft.support.token.domain;
+package org.devgraft.support.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

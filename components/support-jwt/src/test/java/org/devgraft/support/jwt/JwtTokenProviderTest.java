@@ -1,12 +1,12 @@
-package org.devgraft.support.token.jwt;
+package org.devgraft.support.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.devgraft.support.jwt.jwt.JwtTokenGenerateRequest;
+import org.devgraft.support.jwt.jwt.JwtTokenProvider;
 import org.devgraft.support.provider.StubDateProvider;
 import org.devgraft.support.provider.StubUUIDProvider;
-import org.devgraft.support.token.jwt.config.properties.JwtProperties;
-import org.devgraft.support.token.jwt.domain.JwtToken;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
