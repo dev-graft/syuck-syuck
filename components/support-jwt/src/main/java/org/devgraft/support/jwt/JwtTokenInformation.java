@@ -1,8 +1,8 @@
-package org.devgraft.support.token.jwt.domain;
+package org.devgraft.support.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.devgraft.support.token.domain.TokenInformation;
+import org.devgraft.support.jwt.TokenInformation;
 
 import java.util.Date;
 

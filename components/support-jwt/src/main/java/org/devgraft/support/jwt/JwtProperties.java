@@ -1,4 +1,4 @@
-package org.devgraft.support.token.jwt.config.properties;
+package org.devgraft.support.jwt;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

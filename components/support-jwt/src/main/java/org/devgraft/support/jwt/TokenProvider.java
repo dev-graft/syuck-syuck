@@ -1,6 +1,4 @@
-package org.devgraft.support.token;
-
-import org.devgraft.support.token.domain.Token;
+package org.devgraft.support.jwt;
 
 public interface TokenProvider <T extends Token<?>, G extends TokenGenerateRequest> {
     T generate(G request);
