@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import redis.embedded.RedisServer;
+import support.exception.EnableException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Profile("local")
+@EnableException
 @Configuration
 public class EmbeddedRedisConfig {
     @Value("${spring.redis.port}")
