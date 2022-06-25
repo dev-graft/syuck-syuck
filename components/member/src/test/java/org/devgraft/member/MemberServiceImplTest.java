@@ -39,14 +39,15 @@ class MemberServiceImplTest {
     @DisplayName("가입/패스")
     @Test
     void join_passesMemberToRepository() {
-        MemberJoinRequest givenMemberJoinRequest = new MemberJoinRequest("profileImage", "nickName", "identifyToken", "stateMessage");
+        MemberJoinRequest givenMemberJoinRequest = MemberJoinRequest.of("email", "profileImage", "nickName", "identifyToken", "stateMessage");
 
         memberService.join(givenMemberJoinRequest);
 
         assertThat(spyMemberRepository.save_member_argument).isNotNull();
-        assertThat(spyMemberRepository.save_member_argument.getProfileImage()).isEqualTo(givenMemberJoinRequest.getProfileImage());;
-        assertThat(spyMemberRepository.save_member_argument.getNickName()).isEqualTo(givenMemberJoinRequest.getNickName());;
-        assertThat(spyMemberRepository.save_member_argument.getIdentifyToken()).isEqualTo(givenMemberJoinRequest.getIdentifyToken());;
-        assertThat(spyMemberRepository.save_member_argument.getStateMessage()).isEqualTo(givenMemberJoinRequest.getStateMessage());;
+        assertThat(spyMemberRepository.save_member_argument.getEmail()).isEqualTo(givenMemberJoinRequest.getEmail());
+        assertThat(spyMemberRepository.save_member_argument.getProfileImage()).isEqualTo(givenMemberJoinRequest.getProfileImage());
+        assertThat(spyMemberRepository.save_member_argument.getNickName()).isEqualTo(givenMemberJoinRequest.getNickName());
+        assertThat(spyMemberRepository.save_member_argument.getIdentifyToken()).isEqualTo(givenMemberJoinRequest.getIdentifyToken());
+        assertThat(spyMemberRepository.save_member_argument.getStateMessage()).isEqualTo(givenMemberJoinRequest.getStateMessage());
     }
 }

@@ -16,7 +16,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void join(MemberJoinRequest request) {
-        Member member = Member.of(request.getProfileImage(), request.getNickName(), request.getIdentifyToken(), request.getStateMessage());
+        Member member = Member.of(request.getEmail(), request.getProfileImage(), request.getNickName(), request.getIdentifyToken(), request.getStateMessage());
         memberRepository.save(member);
     }
 }

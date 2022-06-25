@@ -13,8 +13,8 @@ import java.util.function.Function;
 public class SpyMemberRepository implements MemberRepository {
     public String findByIdentifyToken_identifyToken_argument;
     public Member save_member_argument;
+    public Optional<Member> optionalMember = Optional.of(Member.of("email","profileImage", "nickName", "identifyToken", "stateMessage"));
 
-    Optional<Member> optionalMember = Optional.of(Member.of("profileImage", "nickName", "identifyToken", "stateMessage"));
     @Override
     public Optional<Member> findByIdentifyToken(String identifyToken) {
         this.findByIdentifyToken_identifyToken_argument = identifyToken;
