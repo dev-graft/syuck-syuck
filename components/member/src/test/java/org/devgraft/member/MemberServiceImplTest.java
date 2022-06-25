@@ -16,6 +16,14 @@ class MemberServiceImplTest {
         memberService = new MemberServiceImpl(spyMemberRepository);
     }
 
+    @DisplayName("맴버 아이디 조회/결과")
+    @Test
+    void getMemberId_returnValue() {
+        Long result = memberService.getMemberId("identifyToken");
+
+        assertThat(result).isEqualTo(1L);
+    }
+
     @DisplayName("가입여부/결과")
     @Test
     void alreadyJoin_returnValue() {
