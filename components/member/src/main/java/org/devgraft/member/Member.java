@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.devgraft.jpa.BaseEntity;
+import org.springframework.util.Assert;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,8 @@ public class Member extends BaseEntity {
     }
 
     public static Member of(final String profileImage, final String nickName, final String identifyToken, final String stateMessage) {
+        Assert.notNull(nickName, "nickName must not be null");
+        Assert.notNull(identifyToken, "identifyToken must not be null");
         return new Member(null, profileImage, nickName, identifyToken, stateMessage);
     }
 }
