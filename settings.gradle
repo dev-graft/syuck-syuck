@@ -1,5 +1,6 @@
 rootProject.name = 'syuck-syuck'
 
+include ':components:member'
 include ':components:support-jpa'
 include ':components:support-mapper'
 include ':components:support-provider'
