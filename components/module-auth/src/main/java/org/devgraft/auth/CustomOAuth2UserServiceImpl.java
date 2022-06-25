@@ -30,6 +30,6 @@ public class CustomOAuth2UserServiceImpl implements CustomOAuth2UserService {
         // 이미 있으면 냅두고
         // 없으면 맴버에 추가
 
-        return null;
+        return oAuth2User;
     }
 }
