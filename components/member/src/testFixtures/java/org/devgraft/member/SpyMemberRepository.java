@@ -86,7 +86,7 @@ public class SpyMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findById(Long aLong) {
-        return Optional.empty();
+        return optionalMember;
     }
 
     @Override

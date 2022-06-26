@@ -1,7 +1,8 @@
 package org.devgraft.member;
 
 public interface MemberService {
-    boolean alreadyJoin(String identifyToken);
-    void join(MemberJoinRequest request);
-    Long getMemberId(String identifyToken);
+    boolean alreadyJoin(final String identifyToken);
+    void join(final MemberJoinRequest request);
+    Long getMemberId(final String identifyToken);
+    MemberGetResponse getMember(final Long memberId);
 }
