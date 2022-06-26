@@ -9,21 +9,28 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public boolean alreadyJoin(String identifyToken) {
+    public boolean alreadyJoin(final String identifyToken) {
         return memberRepository.findByIdentifyToken(identifyToken)
                 .isPresent();
     }
 
     @Override
-    public void join(MemberJoinRequest request) {
+    public void join(final MemberJoinRequest request) {
         Member member = Member.of(request.getEmail(), request.getProfileImage(), request.getNickName(), request.getIdentifyToken(), request.getStateMessage());
         memberRepository.save(member);
     }
 
     @Override
-    public Long getMemberId(String identifyToken) {
+    public Long getMemberId(final String identifyToken) {
         return memberRepository.findByIdentifyToken(identifyToken)
                 .map(Member::getId)
                 .orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public MemberGetResponse getMember(final Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(RuntimeException::new);
+        return new MemberGetResponse(member.getEmail(), member.getNickName(), member.getProfileImage(), member.getStateMessage());
     }
 }
