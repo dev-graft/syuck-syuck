@@ -335,4 +335,3 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,intellij,intellij+iml,intellij+all,java,gradle,windows
 /applications/*/src/main/resources/*-local.yml
-/applications/app-test/src/main/resources/application-local.yml
