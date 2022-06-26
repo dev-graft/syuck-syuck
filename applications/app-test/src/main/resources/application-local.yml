@@ -19,4 +19,4 @@ spring:
 
 support:
   jwt:
-    secret: ${JWT_SECRET}
+    secret: asfjnsgkendkrtngkgdsgkfjnwerknwkefnkdglmsd
