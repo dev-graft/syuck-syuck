@@ -30,7 +30,7 @@ public class AuthUtil {
 
     public Optional<AuthorizationToken> exportAuthorization(HttpServletRequest request) {
         String authorization = request.getHeader(ACCESS_TOKEN_SYNTAX);
-        Optional<Cookie> cookieOpt = Arrays.stream(request.getCookies())
+        Optional<Cookie> cookieOpt = Arrays.stream(request.getCookies() != null ? request.getCookies() : new Cookie[]{})
                 .filter(cookie -> cookie.getName().equals(REFRESH_TOKEN_SYNTAX))
                 .findFirst();
 
