@@ -1,19 +1,12 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import Image from "next/image";
-import Paper from "@mui/material/Paper";
 
 function Copyright(props: any) {
     return (
@@ -61,6 +54,7 @@ export default function SignIn() {
                 >
                     <Image src='/images/logo.gif' width={256} height={128}/>
                     <Button
+                        href={'http://localhost:8080/oauth2/authorization/google'}
                         type="submit"
                         fullWidth
                         variant="contained"

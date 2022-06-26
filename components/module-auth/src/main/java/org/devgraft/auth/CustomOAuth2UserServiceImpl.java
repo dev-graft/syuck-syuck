@@ -31,7 +31,7 @@ public class CustomOAuth2UserServiceImpl implements CustomOAuth2UserService {
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
         OAuthAttributes oa = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-        if (!memberService.alreadyJoin(oa.getName())) {
+        if (!memberService.alreadyJoin(oAuth2User.getName())) {
             memberService.join(MemberJoinRequest.of(oa.getEmail(), oa.getPicture(), oa.getName(), oAuth2User.getName(), null));
         }
 
