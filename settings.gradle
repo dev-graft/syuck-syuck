@@ -1,8 +1,11 @@
 rootProject.name = 'syuck-syuck'
 
-
+include ':components:member'
+include ':components:module-auth'
+include ':components:support-jpa'
 include ':components:support-mapper'
 include ':components:support-provider'
 include ':components:support-advice-response'
 include ':components:support-redis'
+include ':components:support-jwt'
 include ':applications:app-test'
