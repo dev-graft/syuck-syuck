@@ -1,15 +1,18 @@
 package org.devgraft.member;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class MemberJoinRequest {
-    private final String email;
-    private final String profileImage;
-    private final String nickName;
-    private final String identifyToken;
-    private final String stateMessage;
+    private String email;
+    private String profileImage;
+    private String nickName;
+    private String identifyToken;
+    private String stateMessage;
 
     private MemberJoinRequest(String email, String profileImage, String nickName, String identifyToken, String stateMessage) {
         Assert.notNull(email, "email must not be null");
