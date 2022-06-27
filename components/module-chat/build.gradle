@@ -1,0 +1,9 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+    api(project(":components:support-advice-response"))
+    implementation(project(":components:support-provider"))
+    implementation(project(":components:support-mapper"))
+}

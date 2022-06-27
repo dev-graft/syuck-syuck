@@ -1,0 +1,4 @@
+#http://localhost:8080/oauth2/authorization/google
+spring:
+  profiles:
+    include: oauth
