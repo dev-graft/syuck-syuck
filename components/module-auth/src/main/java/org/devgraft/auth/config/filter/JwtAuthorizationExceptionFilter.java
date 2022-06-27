@@ -1,4 +1,4 @@
-package org.devgraft.auth;
+package org.devgraft.auth.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

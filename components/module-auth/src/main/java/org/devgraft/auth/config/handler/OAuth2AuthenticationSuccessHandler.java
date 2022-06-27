@@ -1,6 +1,7 @@
-package org.devgraft.auth;
+package org.devgraft.auth.config.handler;
 
 import lombok.RequiredArgsConstructor;
+import org.devgraft.auth.AuthUtil;
 import org.devgraft.member.MemberService;
 import org.devgraft.support.jwt.JwtGenerateRequest;
 import org.devgraft.support.jwt.JwtService;
@@ -28,9 +29,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         String refreshToken = jwtService.generateToken(JwtGenerateRequest.of(accessToken, "ROLE_USER", 3600 * 30 * 12));
         authUtil.injectAuthorization(accessToken, refreshToken, response);
 
-//        response.sendRedirect("http://localhost:3000/login/token?" + AuthUtil.ACCESS_TOKEN_SYNTAX + "=" + accessToken);
-        response.sendRedirect("http://localhost:8080/demo/login/token?" + AuthUtil.ACCESS_TOKEN_SYNTAX + "=" + accessToken);
-//        response.sendRedirect("http://localhost:8080/demo/profile");
+        response.sendRedirect("http://localhost:8080/auth/success/token?" + AuthUtil.ACCESS_TOKEN_SYNTAX + "=" + accessToken);
 //        request.getRequestDispatcher("http://localhost:8080/demo/profile").forward(request, response);
     }
 }

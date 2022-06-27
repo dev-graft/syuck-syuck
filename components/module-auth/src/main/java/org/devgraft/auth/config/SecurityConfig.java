@@ -1,6 +1,11 @@
-package org.devgraft.auth;
+package org.devgraft.auth.config;
 
 import lombok.RequiredArgsConstructor;
+import org.devgraft.auth.CustomOAuth2UserService;
+import org.devgraft.auth.config.filter.JwtAuthorizationExceptionFilter;
+import org.devgraft.auth.config.filter.JwtAuthorizationFilter;
+import org.devgraft.auth.config.handler.OAuth2AuthenticationFailureHandler;
+import org.devgraft.auth.config.handler.OAuth2AuthenticationSuccessHandler;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v*/api-docs", "/swagger-resources/**",
-                "/swagger-ui.html", "/webjars/**", "/swagger/**");
+                "/swagger-ui.html", "/webjars/**", "/swagger/**", "/static/**", "/templates/**");
     }
 
     @Override

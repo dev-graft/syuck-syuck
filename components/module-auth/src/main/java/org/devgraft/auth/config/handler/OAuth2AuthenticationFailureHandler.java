@@ -1,4 +1,4 @@
-package org.devgraft.auth;
+package org.devgraft.auth.config.handler;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
