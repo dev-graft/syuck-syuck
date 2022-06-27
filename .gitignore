@@ -334,3 +334,6 @@ gradle-app.setting
 ./applications/web-ohlot/node_modules/*
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,intellij,intellij+iml,intellij+all,java,gradle,windows
+/components/module-auth/src/main/resources/application-oauth.yml
+
+/applications/*/src/main/resources/*-local.yml

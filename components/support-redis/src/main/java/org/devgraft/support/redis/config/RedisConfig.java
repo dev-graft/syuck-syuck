@@ -8,10 +8,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import support.exception.EnableException;
 
 import java.io.Serializable;
 
-
+@EnableException
 @Configuration
 public class RedisConfig {
 
