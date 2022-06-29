@@ -20,7 +20,7 @@ var index = {
             alert('회원가입이 성공했습니다.');
             window.location.href = '/';
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            alert(JSON.stringify(error.message));
         });
     },
 };
