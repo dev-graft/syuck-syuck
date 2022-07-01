@@ -26,11 +26,12 @@ class JwtServiceImplTest {
     @DisplayName("토큰 생성/결과")
     @Test
     void generateToken_returnValue() {
+        String givenSub = "Sub";
         String givenAud = "Aud";
         String givenRole = "Role";
         int givenPeriodSecond = 3600;
-        JwtGenerateRequest givenRequest = JwtGenerateRequest.of(givenAud, givenRole, givenPeriodSecond);
-        String jwt = issuedToken(givenAud, givenRole, givenPeriodSecond);
+        JwtGenerateRequest givenRequest = JwtGenerateRequest.of(givenSub, givenAud, givenRole, givenPeriodSecond);
+        String jwt = issuedToken(givenSub, givenAud, givenRole, givenPeriodSecond);
 
         String result = jwtService.generateToken(givenRequest);
 
@@ -40,7 +41,7 @@ class JwtServiceImplTest {
     @DisplayName("getBody/결과")
     @Test
     void getBody_returnValue() {
-        String token = issuedToken("Aud", "role", 3600);
+        String token = issuedToken("Sub","Aud", "role", 3600);
         Claims givenClaims = Jwts.parserBuilder()
                 .setSigningKey(jwtProperties.getSignKey())
                 .build()
@@ -55,7 +56,7 @@ class JwtServiceImplTest {
     @DisplayName("토큰 확인/정상결과")
     @Test
     void verifyToken_returnValue() {
-        String token = issuedToken("Aud", "role", 3600);
+        String token = issuedToken("Sub","Aud", "role", 3600);
 
         boolean result = jwtService.verifyToken(token);
 
@@ -65,7 +66,7 @@ class JwtServiceImplTest {
     @DisplayName("토큰 확인/만료결과")
     @Test
     void verifyToken_Expired_returnValue() {
-        String token = issuedToken("Aud", "role", 0);
+        String token = issuedToken("Sub", "Aud", "role", 0);
 
         boolean result = jwtService.verifyToken(token);
 
@@ -75,16 +76,32 @@ class JwtServiceImplTest {
     @DisplayName("사용자 식별값 조회/결과")
     @Test
     void getAud_returnValue() {
+        String givenSub = "Sub";
         String givenAud = "Aud";
-        String token = issuedToken(givenAud, "role", 3600);
+        String token = issuedToken(givenSub, givenAud, "role", 3600);
 
         String result = jwtService.getAud(token);
 
         assertThat(result).isEqualTo(givenAud);
     }
 
-    private String issuedToken(final String aud, final String role, final long periodSecond) {
-        Claims claims = Jwts.claims().setAudience(aud);
+    @DisplayName("Subject 조회/결과")
+    @Test
+    void getSub_returnValue() {
+        String givenSub = "Sub";
+        String givenAud = "Aud";
+        String token = issuedToken(givenSub, givenAud, "role", 3600);
+
+        String result = jwtService.getSub(token);
+
+        assertThat(result).isEqualTo(givenSub);
+    }
+
+    private String issuedToken(final String sub, final String aud, final String role, final long periodSecond) {
+        Claims claims = Jwts.claims()
+                .setSubject(sub)
+                .setAudience(aud);
+
         claims.put("role", role);
         Date now = stubDateProvider.now();
 

@@ -17,7 +17,9 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateToken(final JwtGenerateRequest request) {
-        Claims claims = Jwts.claims().setAudience(request.getAud());
+        Claims claims = Jwts.claims()
+                .setSubject(request.getSub())
+                .setAudience(request.getAud());
         claims.put("role", request.getRole());
         Date now = dateProvider.now();
 
@@ -43,6 +45,12 @@ public class JwtServiceImpl implements JwtService {
     public String getAud(String token) {
         return this.getBody(token)
                 .getAudience();
+    }
+
+    @Override
+    public String getSub(String token) {
+        return this.getBody(token)
+                .getSubject();
     }
 
     @Override
