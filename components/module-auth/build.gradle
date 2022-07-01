@@ -7,5 +7,9 @@ dependencies {
     api(project(":components:support-advice-response"))
     implementation(project(":components:support-jwt"))
     implementation(project(":components:member"))
+    implementation(project(":components:support-provider"))
+    testImplementation(testFixtures(project(":components:support-jwt")))
+    testImplementation(testFixtures(project(":components:member")))
+    testImplementation(testFixtures(project(":components:support-provider")))
     implementation('org.springframework.boot:spring-boot-starter-mustache')
 }

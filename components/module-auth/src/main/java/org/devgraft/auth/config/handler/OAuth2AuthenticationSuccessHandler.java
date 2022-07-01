@@ -25,8 +25,11 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         Long memberId = memberService.getMemberId(oAuth2User.getName());
-        String accessToken = jwtService.generateToken(JwtGenerateRequest.of(memberId.toString(), "ROLE_USER", 600));
-        String refreshToken = jwtService.generateToken(JwtGenerateRequest.of(accessToken, "ROLE_USER", 3600 * 30 * 12));
+
+        // access sub = LOGIN(의미가 없는 값을 넣을까?), aud = memberId
+        // refresh sub = accessToken, aud = memberId
+        String accessToken = jwtService.generateToken(JwtGenerateRequest.of("LOGIN", memberId.toString(), "ROLE_USER", 600));
+        String refreshToken = jwtService.generateToken(JwtGenerateRequest.of(accessToken, memberId.toString(), "ROLE_USER", 3600 * 30 * 12));
         authUtil.injectAuthorization(accessToken, refreshToken, response);
 
         response.sendRedirect("http://localhost:8080/auth/success/token?" + AuthUtil.ACCESS_TOKEN_SYNTAX + "=" + accessToken);
