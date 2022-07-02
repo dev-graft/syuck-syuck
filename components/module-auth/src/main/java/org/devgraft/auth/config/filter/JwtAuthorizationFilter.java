@@ -7,6 +7,7 @@ import org.devgraft.auth.AuthUserDetails;
 import org.devgraft.auth.AuthUtil;
 import org.devgraft.auth.AuthorizationToken;
 import org.devgraft.support.jwt.JwtService;
+import org.devgraft.support.provider.SHA256Provider;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,12 +21,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
+    private final SHA256Provider sha256Provider;
     private final JwtService jwtService;
     private final AuthUtil authUtil;
     @Override
@@ -40,7 +43,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             }
             Claims accessTokenBody = jwtService.getBody(authorizationToken.getAccessToken());
             Claims refreshTokenBody = jwtService.getBody(authorizationToken.getRefreshToken());
-            if(!authorizationToken.getAccessToken().equals(refreshTokenBody.getAudience())) throw new JwtAuthorizationException("검증되지 않은 인증요청입니다.", HttpStatus.UNAUTHORIZED);
+            if(!Objects.equals(sha256Provider.encrypt(authorizationToken.getAccessToken(), "CRYPT_LOGIN_TOKEN"), refreshTokenBody.getSubject())) throw new JwtAuthorizationException("검증되지 않은 인증요청입니다.", HttpStatus.UNAUTHORIZED);
             AbstractAuthenticationToken authenticationToken = createAuthenticationToken(accessTokenBody.getAudience(), (String) accessTokenBody.get("role"));
             SecurityContextHolder
                     .getContext()
