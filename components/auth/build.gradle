@@ -1,0 +1,10 @@
+dependencies {
+    implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    api(project(":components:support-advice-response"))
+    implementation(project(":components:support-jwt"))
+    implementation(project(":components:member"))
+    implementation(project(":components:support-provider"))
+    testImplementation(testFixtures(project(":components:support-jwt")))
+    testImplementation(testFixtures(project(":components:member")))
+    testImplementation(testFixtures(project(":components:support-provider")))
+}

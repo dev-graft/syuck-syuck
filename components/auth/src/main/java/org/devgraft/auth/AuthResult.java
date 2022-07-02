@@ -11,7 +11,7 @@ public class AuthResult {
     private final String access;
     private final String refresh;
 
-    public static AuthResult of(String access, String refresh) {
+    public static AuthResult of(final String access, final String refresh) {
         Assert.notNull(access, "access must not be null");
         Assert.notNull(refresh, "refresh must not be null");
         return new AuthResult(access, refresh);
