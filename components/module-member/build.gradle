@@ -5,6 +5,7 @@ dependencies {
     implementation(project(":components:member"))
     implementation(project(":components:support-provider"))
     testImplementation(testFixtures(project(":components:member")))
+    testImplementation(testFixtures(project(":components:auth")))
     testImplementation(testFixtures(project(":components:support-provider")))
     implementation('org.springframework.boot:spring-boot-starter-mustache')
 }
