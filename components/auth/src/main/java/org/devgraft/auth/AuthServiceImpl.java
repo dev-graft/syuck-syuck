@@ -2,6 +2,9 @@ package org.devgraft.auth;
 
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.devgraft.auth.exception.AuthAccessTokenExpiredException;
+import org.devgraft.auth.exception.AuthRefreshTokenExpiredException;
+import org.devgraft.auth.exception.UnverifiedAuthRequestException;
 import org.devgraft.member.MemberService;
 import org.devgraft.support.jwt.JwtGenerateRequest;
 import org.devgraft.support.jwt.JwtService;
@@ -75,6 +78,16 @@ public class AuthServiceImpl implements AuthService {
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
+    }
+
+    @Override
+    public MemberCredentials verity(String accessToken, String refresh) throws AuthAccessTokenExpiredException, AuthRefreshTokenExpiredException, UnverifiedAuthRequestException {
+        if (!jwtService.verifyToken(accessToken)) throw new AuthAccessTokenExpiredException();
+        if (!jwtService.verifyToken(refresh)) throw new AuthRefreshTokenExpiredException();
+        Claims refreshTokenBody = jwtService.getBody(refresh);
+        if (!Objects.equals(refreshTokenBody.getSubject(), encrypt(accessToken))) throw new UnverifiedAuthRequestException();
+        Claims accessTokenBody = jwtService.getBody(accessToken);
+        return MemberCredentials.of(Long.valueOf(accessTokenBody.getAudience()), (String)accessTokenBody.get("role"));
     }
 
     private String encrypt(final String text) {

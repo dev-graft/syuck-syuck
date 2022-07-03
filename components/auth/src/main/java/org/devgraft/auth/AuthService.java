@@ -1,5 +1,9 @@
 package org.devgraft.auth;
 
+import org.devgraft.auth.exception.AuthAccessTokenExpiredException;
+import org.devgraft.auth.exception.AuthRefreshTokenExpiredException;
+import org.devgraft.auth.exception.UnverifiedAuthRequestException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
@@ -10,4 +14,5 @@ public interface AuthService {
     void injectAuthorization(final String accessToken, final String refreshToken, HttpServletResponse response); // 인가 정보 주입
     Optional<AuthResult> exportAuthorization(HttpServletRequest request); // 인가 정보 추출
     void removeAuthorization(HttpServletResponse response);
+    MemberCredentials verity(final String accessToken, final String refresh) throws AuthAccessTokenExpiredException, AuthRefreshTokenExpiredException, UnverifiedAuthRequestException;
 }
