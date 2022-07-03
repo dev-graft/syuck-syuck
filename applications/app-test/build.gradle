@@ -1,5 +1,6 @@
 dependencies {
     implementation(project(':components:module-auth'))
+    implementation(project(':components:module-member'))
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     implementation 'mysql:mysql-connector-java'

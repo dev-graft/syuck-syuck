@@ -1,11 +1,11 @@
 package org.devgraft.auth.config;
 
 import lombok.RequiredArgsConstructor;
-import org.devgraft.auth.CustomOAuth2UserService;
 import org.devgraft.auth.config.filter.JwtAuthorizationExceptionFilter;
 import org.devgraft.auth.config.filter.JwtAuthorizationFilter;
-import org.devgraft.auth.config.handler.OAuth2AuthenticationFailureHandler;
-import org.devgraft.auth.config.handler.OAuth2AuthenticationSuccessHandler;
+import org.devgraft.auth.oauth.CustomOAuth2UserService;
+import org.devgraft.auth.oauth.handler.OAuth2AuthenticationFailureHandler;
+import org.devgraft.auth.oauth.handler.OAuth2AuthenticationSuccessHandler;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

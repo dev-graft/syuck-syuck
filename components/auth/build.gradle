@@ -1,0 +1,11 @@
+dependencies {
+    api group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    implementation 'org.springframework:spring-webmvc:5.3.20'
+    api(project(":components:support-advice-response"))
+    implementation(project(":components:support-jwt"))
+    implementation(project(":components:member"))
+    implementation(project(":components:support-provider"))
+    testImplementation(testFixtures(project(":components:support-jwt")))
+    testImplementation(testFixtures(project(":components:member")))
+    testImplementation(testFixtures(project(":components:support-provider")))
+}

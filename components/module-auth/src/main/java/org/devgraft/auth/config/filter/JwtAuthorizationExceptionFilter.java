@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import support.CommonResult;
+import support.exception.AbstractRequestException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class JwtAuthorizationExceptionFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             filterChain.doFilter(request, response);
-        } catch (JwtAuthorizationException e) {
+        } catch (AbstractRequestException e) {
             log.error(e.getMessage());
             response.setStatus(e.getHttpStatus().value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
