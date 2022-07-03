@@ -1,5 +1,6 @@
 package org.devgraft.auth;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.devgraft.member.SpyMemberService;
 import org.devgraft.support.jwt.SpyJwtService;
@@ -31,18 +32,6 @@ class AuthServiceImplTest {
         spyJwtService = new SpyJwtService();
         stubSHA256Provider = new StubSHA256Provider();
         authService = new AuthServiceImpl(spyMemberService, spyJwtService, stubSHA256Provider);
-    }
-
-    @DisplayName("사용자 로그인 용도 토큰 발급. identifyToken 필요.")
-    @Test
-    void issuedMemberAuthToken_test() {
-        spyMemberService.getMemberId_returnValue = 2L;
-        String givenIdentifyToken = "identifyToken";
-
-        AuthResult jwtAuthResult = authService.issuedMemberAuthToken(givenIdentifyToken);
-
-        assertThat(spyMemberService.getMemberId_identifyToken_argument).isEqualTo(givenIdentifyToken);
-        assertThat(jwtAuthResult).isNotNull();
     }
 
     @DisplayName("토큰 재발급. refresh는 만료되어선 안된다.")
@@ -105,5 +94,37 @@ class AuthServiceImplTest {
         authService.removeAuthorization(givenResponse);
 
         assertThat(Objects.requireNonNull(givenResponse.getCookie(REFRESH_TOKEN_SYNTAX)).getValue()).isNull();
+    }
+
+    @DisplayName("인증 요청 정보의 만료, 키쌍을 확인하고 성공했을 경우 인증정보를 반환한다.")
+    @Test
+    void verity_test() {
+        spyJwtService.verifyToken_returnValue = true;
+        String givenAccessToken = "access";
+        String givenRefresh = "refresh";
+        String givenRole = "ROLE_USER";
+        Claims givenAccessClaims = Jwts.claims().setAudience("1");
+        Claims givenRefreshClaims = Jwts.claims().setSubject(givenAccessToken).setAudience("1");
+        givenAccessClaims.put("role", givenRole);
+        stubSHA256Provider.encrypt_returnValue = givenAccessToken;
+        spyJwtService.getBody_returnValues.put(givenAccessToken, givenAccessClaims);
+        spyJwtService.getBody_returnValues.put(givenRefresh, givenRefreshClaims);
+
+        MemberCredentials memberCredentials = authService.verity(givenAccessToken, givenRefresh);
+
+        assertThat(memberCredentials.getMemberId()).isEqualTo(1L);
+        assertThat(memberCredentials.getRole()).isEqualTo(givenRole);
+    }
+
+    @DisplayName("사용자 로그인 용도 토큰 발급. identifyToken 필요.")
+    @Test
+    void issuedMemberAuthToken_test() {
+        spyMemberService.getMemberId_returnValue = 2L;
+        String givenIdentifyToken = "identifyToken";
+
+        AuthResult jwtAuthResult = authService.issuedMemberAuthToken(givenIdentifyToken);
+
+        assertThat(spyMemberService.getMemberId_identifyToken_argument).isEqualTo(givenIdentifyToken);
+        assertThat(jwtAuthResult).isNotNull();
     }
 }

@@ -12,5 +12,6 @@ dependencies {
     testImplementation(testFixtures(project(":components:support-jwt")))
     testImplementation(testFixtures(project(":components:member")))
     testImplementation(testFixtures(project(":components:support-provider")))
+    testImplementation(testFixtures(project(":components:auth")))
     implementation('org.springframework.boot:spring-boot-starter-mustache')
 }

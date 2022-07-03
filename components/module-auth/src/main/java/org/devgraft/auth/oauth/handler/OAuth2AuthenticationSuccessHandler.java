@@ -1,4 +1,4 @@
-package org.devgraft.auth.config.handler;
+package org.devgraft.auth.oauth.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.devgraft.auth.AuthResult;
@@ -21,8 +21,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         AuthResult authResult = authService.issuedMemberAuthToken(oAuth2User.getName());
-        authService.injectAuthorization(authResult.getAccess(), authResult.getRefresh(), response);
+        request.getSession().setAttribute("refresh", authResult.getRefresh());
         response.sendRedirect("http://localhost:8080/auth/success?token=" + authResult.getAccess());
-//        request.getRequestDispatcher("http://localhost:8080/demo/profile").forward(request, response);
     }
 }

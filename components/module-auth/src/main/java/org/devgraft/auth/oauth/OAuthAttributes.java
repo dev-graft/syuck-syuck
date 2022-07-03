@@ -1,4 +1,4 @@
-package org.devgraft.auth;
+package org.devgraft.auth.oauth;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

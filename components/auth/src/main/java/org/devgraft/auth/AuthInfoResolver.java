@@ -1,6 +1,7 @@
 package org.devgraft.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.devgraft.auth.exception.AuthInfoNotFoundException;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -26,6 +27,6 @@ public class AuthInfoResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         Optional<AuthResult> authResultOpt = authService.exportAuthorization((HttpServletRequest) webRequest.getNativeRequest());
-        return authResultOpt.orElseThrow(RuntimeException::new);
+        return authResultOpt.orElseThrow(AuthInfoNotFoundException::new);
     }
 }

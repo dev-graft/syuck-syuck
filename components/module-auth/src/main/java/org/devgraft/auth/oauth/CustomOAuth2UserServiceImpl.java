@@ -1,4 +1,4 @@
-package org.devgraft.auth;
+package org.devgraft.auth.oauth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

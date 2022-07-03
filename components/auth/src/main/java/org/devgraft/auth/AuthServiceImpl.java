@@ -38,9 +38,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResult refresh(final String accessToken, final String refresh) {
-        Claims claims = jwtService.getBody(refresh);
-        if (!Objects.equals(claims.getSubject(), encrypt(accessToken))) throw new RuntimeException();
-        return issuedMemberAuthToken(Long.valueOf(claims.getAudience()));
+        if (isIllegalAuthRequest(accessToken, refresh)) throw new UnverifiedAuthRequestException();
+        return issuedMemberAuthToken(Long.valueOf(jwtService.getBody(refresh).getAudience()));
     }
 
     @Override
@@ -84,14 +83,18 @@ public class AuthServiceImpl implements AuthService {
     public MemberCredentials verity(String accessToken, String refresh) throws AuthAccessTokenExpiredException, AuthRefreshTokenExpiredException, UnverifiedAuthRequestException {
         if (!jwtService.verifyToken(accessToken)) throw new AuthAccessTokenExpiredException();
         if (!jwtService.verifyToken(refresh)) throw new AuthRefreshTokenExpiredException();
-        Claims refreshTokenBody = jwtService.getBody(refresh);
-        if (!Objects.equals(refreshTokenBody.getSubject(), encrypt(accessToken))) throw new UnverifiedAuthRequestException();
+        if (isIllegalAuthRequest(accessToken, refresh)) throw new UnverifiedAuthRequestException();
         Claims accessTokenBody = jwtService.getBody(accessToken);
         return MemberCredentials.of(Long.valueOf(accessTokenBody.getAudience()), (String)accessTokenBody.get("role"));
     }
 
     private String encrypt(final String text) {
         return sha256Provider.encrypt(text, "CRYPT_LOGIN_TOKEN");
+    }
+
+    private boolean isIllegalAuthRequest(final String accessToken, final String refresh) {
+        Claims refreshTokenBody = jwtService.getBody(refresh);
+        return !Objects.equals(refreshTokenBody.getSubject(), encrypt(accessToken));
     }
 
     private AuthResult issuedMemberAuthToken(Long memberId) {
