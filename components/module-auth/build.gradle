@@ -4,9 +4,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+
     api(project(":components:support-advice-response"))
     implementation(project(":components:auth"))
-    implementation(project(":components:support-jwt"))
+    api(project(":components:support-jwt"))
     implementation(project(":components:member"))
     implementation(project(":components:support-provider"))
     testImplementation(testFixtures(project(":components:support-jwt")))
