@@ -12,5 +12,4 @@ include ':components:support-redis'
 include ':components:support-token'
 
 include ':components:support-jwt'
-include ':applications:app-test'
 include ':applications:app-demo'

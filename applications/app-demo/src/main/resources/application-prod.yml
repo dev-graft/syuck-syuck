@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    url: ${DB_CONNECT_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    dbcp2:
+      validation-query: "SELECT 1"
+      test-on-borrow: true
+      test-on-return: false
+    hikari:
+      pool-name: SpringBootJPAHikariCP
+      maximum-pool-size: 50
+      connection-timeout: 10000
+      validation-timeout: 10000
+      idle-timeout: 10000
+      max-lifetime: 28797000 # 480000
+
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: none
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+        default_batch_fetch_size: 100
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - profile
+              - email
+
+support:
+  jwt:
+    secret: ${JWT_SECRET}
+
