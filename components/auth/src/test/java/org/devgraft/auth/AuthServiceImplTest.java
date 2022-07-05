@@ -22,9 +22,6 @@ class AuthServiceImplTest {
     private SpyJwtService spyJwtService;
     private StubSHA256Provider stubSHA256Provider;
     private AuthService authService;
-    public final String HEADER_TOKEN_PREFIX = "Bearer ";
-    public final String ACCESS_TOKEN_SYNTAX = "Authorization";
-    public final String REFRESH_TOKEN_SYNTAX = "refresh_token";
 
     @BeforeEach
     void setUp() {
@@ -53,8 +50,8 @@ class AuthServiceImplTest {
 
         authService.injectAuthorization(givenAccessToken, givenRefresh, givenResponse);
 
-        assertThat(givenResponse.getHeader(ACCESS_TOKEN_SYNTAX)).isEqualTo(givenAccessToken);
-        assertThat(Objects.requireNonNull(givenResponse.getCookie(REFRESH_TOKEN_SYNTAX)).getValue()).isEqualTo(givenRefresh);
+        assertThat(givenResponse.getHeader(TokenName.ACCESS_TOKEN_SYNTAX)).isEqualTo(givenAccessToken);
+        assertThat(Objects.requireNonNull(givenResponse.getCookie(TokenName.REFRESH_TOKEN_SYNTAX)).getValue()).isEqualTo(givenRefresh);
     }
 
     @DisplayName("사용자의 요청 정보에서 인증 토큰을 갖고 온다.")
@@ -63,9 +60,9 @@ class AuthServiceImplTest {
         MockHttpServletRequest givenRequest = new MockHttpServletRequest();
         String givenRefresh = "refresh";
         String givenAccess = "access";
-        String givenBearerAccess = HEADER_TOKEN_PREFIX.concat(givenAccess);
-        Cookie givenCookie = new Cookie(REFRESH_TOKEN_SYNTAX, givenRefresh);
-        givenRequest.addHeader(ACCESS_TOKEN_SYNTAX, givenBearerAccess);
+        String givenBearerAccess = TokenName.HEADER_TOKEN_PREFIX.concat(givenAccess);
+        Cookie givenCookie = new Cookie(TokenName.REFRESH_TOKEN_SYNTAX, givenRefresh);
+        givenRequest.addHeader(TokenName.ACCESS_TOKEN_SYNTAX, givenBearerAccess);
         givenRequest.setCookies(givenCookie);
 
         Optional<AuthResult> authResultOpt = authService.exportAuthorization(givenRequest);
@@ -93,7 +90,7 @@ class AuthServiceImplTest {
 
         authService.removeAuthorization(givenResponse);
 
-        assertThat(Objects.requireNonNull(givenResponse.getCookie(REFRESH_TOKEN_SYNTAX)).getValue()).isNull();
+        assertThat(Objects.requireNonNull(givenResponse.getCookie(TokenName.REFRESH_TOKEN_SYNTAX)).getValue()).isNull();
     }
 
     @DisplayName("인증 요청 정보의 만료, 키쌍을 확인하고 성공했을 경우 인증정보를 반환한다.")

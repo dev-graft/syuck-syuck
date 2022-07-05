@@ -66,13 +66,13 @@ class MemberServiceImplTest {
     void getMember_returnValue() {
         long givenId = 1L;
         String givenEmail = "A_Email";
-        String givenNickName = "A_NickName";
+        String givenNickname = "A_Nickname";
         String givenProfileImage = "A_ProfileImage";
         String givenStateMessage = "A_StateMessage";
         spyMemberRepository.optionalMember = Optional.of(MemberFixture.anMember()
                 .id(givenId)
                 .email(givenEmail)
-                .nickName(givenNickName)
+                .nickname(givenNickname)
                 .profileImage(givenProfileImage)
                 .stateMessage(givenStateMessage)
                 .build());
@@ -80,7 +80,7 @@ class MemberServiceImplTest {
         MemberGetResponse result = memberService.getMember(givenId);
 
         assertThat(result.getEmail()).isEqualTo(givenEmail);
-        assertThat(result.getNickName()).isEqualTo(givenNickName);
+        assertThat(result.getNickName()).isEqualTo(givenNickname);
         assertThat(result.getProfileImage()).isEqualTo(givenProfileImage);
         assertThat(result.getStateMessage()).isEqualTo(givenStateMessage);
     }
