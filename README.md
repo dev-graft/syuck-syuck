@@ -1,6 +1,6 @@
 # SyukSyuk
 
-> 행사 관련 티켓팅을 슉슉! 예매할 수 있는 서비스! 
+> 슉슉 슉슉슉!!!
 
 [Team Blog](https://pcloud.tistory.com) 슉슉
 
