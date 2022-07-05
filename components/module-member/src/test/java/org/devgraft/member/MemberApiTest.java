@@ -36,12 +36,12 @@ class MemberApiTest {
     void getMyProfile_Api_Test() throws Exception {
         spyAuthService.exportAuthorization_returnValue = Optional.of(AuthResult.of("access", "refresh"));
         spyAuthService.verity_returnValue = MemberCredentials.of(2L, "USER");
-        spyMemberService.getMember_returnValue = MemberGetResponse.of("email", "nickName", "profileImage", "stateMessage");
+        spyMemberService.getMember_returnValue = MemberGetResponse.of("email", "nickname", "profileImage", "stateMessage");
 
         mockMvc.perform(get("/api/v1/members/me"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email", equalTo("email")))
-                .andExpect(jsonPath("$.nickName", equalTo("nickName")))
+                .andExpect(jsonPath("$.nickname", equalTo("nickname")))
                 .andExpect(jsonPath("$.profileImage", equalTo("profileImage")))
                 .andExpect(jsonPath("$.stateMessage", equalTo("stateMessage")))
         ;

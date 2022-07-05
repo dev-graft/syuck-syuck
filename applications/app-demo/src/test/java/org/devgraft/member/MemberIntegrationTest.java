@@ -7,7 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional
@@ -18,6 +21,11 @@ public class MemberIntegrationTest extends IntegrationTest {
     @Test
     void getMyProfile() throws Exception {
         mockMvc.perform(get("/api/v1/members/me"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.email", equalTo("email")))
+                .andExpect(jsonPath("$.data.nickname", equalTo("nickname")))
+                .andExpect(jsonPath("$.data.profileImage", equalTo("profileImage")))
+                .andExpect(jsonPath("$.data.stateMessage", equalTo("stateMessage")))
+                .andDo(print());
     }
 }

@@ -80,7 +80,7 @@ class MemberServiceImplTest {
         MemberGetResponse result = memberService.getMember(givenId);
 
         assertThat(result.getEmail()).isEqualTo(givenEmail);
-        assertThat(result.getNickName()).isEqualTo(givenNickname);
+        assertThat(result.getNickname()).isEqualTo(givenNickname);
         assertThat(result.getProfileImage()).isEqualTo(givenProfileImage);
         assertThat(result.getStateMessage()).isEqualTo(givenStateMessage);
     }
