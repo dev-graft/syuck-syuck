@@ -3,6 +3,8 @@ package org.devgraft.member;
 public class SpyMemberService implements MemberService {
     public String getMemberId_identifyToken_argument;
     public Long getMemberId_returnValue = 1L;
+    public MemberGetResponse getMember_returnValue;
+    public Long getMember_memberId_argument;
     @Override
     public boolean alreadyJoin(String identifyToken) {
         return false;
@@ -21,6 +23,7 @@ public class SpyMemberService implements MemberService {
 
     @Override
     public MemberGetResponse getMember(Long memberId) {
-        return null;
+        this.getMember_memberId_argument = memberId;
+        return getMember_returnValue;
     }
 }

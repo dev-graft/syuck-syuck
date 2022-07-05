@@ -4,7 +4,7 @@ public class MemberFixture {
     public static Member.MemberBuilder anMember() {
         return Member.builder()
                 .email("email")
-                .nickName("nickName")
+                .nickname("nickname")
                 .profileImage("profileImage")
                 .stateMessage("stateMessage");
     }

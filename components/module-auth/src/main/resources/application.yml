@@ -6,3 +6,5 @@ spring:
 support:
   jwt:
     secret: abcdefghijklnmdsghdtrjdtcgxdgfncnhfgnhjchfcdgh
+  auth:
+    redirect-url: http://localhost:8080

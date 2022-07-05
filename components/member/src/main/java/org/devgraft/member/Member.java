@@ -23,19 +23,19 @@ public class Member extends BaseEntity {
     private String email;
     @Column(name = "profile_image")
     private String profileImage;
-    @Column(name = "nick_name")
-    private String nickName;
+    @Column(name = "nickname")
+    private String nickname;
     @Column(name = "identify_token")
     private String identifyToken;
     @Column(name = "state_message")
     private String stateMessage;
 
     @Builder(access = AccessLevel.PROTECTED)
-    private Member(Long id, String email, String profileImage, String nickName, String identifyToken, String stateMessage) {
+    private Member(Long id, String email, String profileImage, String nickname, String identifyToken, String stateMessage) {
         this.id = id;
         this.email = email;
         this.profileImage = profileImage;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.identifyToken = identifyToken;
         this.stateMessage = stateMessage;
     }

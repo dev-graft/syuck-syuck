@@ -1,9 +1,8 @@
 dependencies {
+    implementation(project(':components:module-auth'))
+    implementation(project(':components:module-member'))
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    api(project(":components:support-advice-response"))
-    implementation(project(":components:member"))
-    implementation('org.springframework.boot:spring-boot-starter-mustache')
+    implementation 'org.springframework:spring-tx'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     implementation 'mysql:mysql-connector-java'

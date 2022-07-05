@@ -14,6 +14,9 @@ public class SpyAuthService implements AuthService {
     public String refresh_argument_refresh;
     public AuthResult refresh_returnValue;
     public boolean removeAuthorization_wasCall = false;
+    public String verity_accessToken_argument;
+    public String verity_refresh_argument;
+    public MemberCredentials verity_returnValue;
     @Override
     public AuthResult issuedMemberAuthToken(String identifyToken) {
         return null;
@@ -45,6 +48,8 @@ public class SpyAuthService implements AuthService {
 
     @Override
     public MemberCredentials verity(String accessToken, String refresh) throws AuthAccessTokenExpiredException, AuthRefreshTokenExpiredException, UnverifiedAuthRequestException {
-        return null;
+        this.verity_accessToken_argument = accessToken;
+        this.verity_refresh_argument = refresh;
+        return verity_returnValue;
     }
 }

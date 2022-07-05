@@ -1,0 +1,2 @@
+insert into member(id, email, profile_image, nickname, identify_token, state_message, created_at, updated_at)
+values (1, 'email', 'profileImage', 'nickname', 'identifyToken', 'stateMessage', '1996-06-24 00:00:00', '1996-06-24 00:00:00');

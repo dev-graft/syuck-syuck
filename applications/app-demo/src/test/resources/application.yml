@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test-db;
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: h2
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: none
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - profile
+              - email
+
+support:
+  jwt:
+    secret: asdfcerdujhtcrnyerdyhurftyjvtgnybhdrtbnge5yhdrtyhffhhb
+  auth:
+    redirect-url: http://localhost:8080

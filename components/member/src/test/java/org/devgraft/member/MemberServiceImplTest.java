@@ -56,7 +56,7 @@ class MemberServiceImplTest {
         assertThat(spyMemberRepository.save_member_argument).isNotNull();
         assertThat(spyMemberRepository.save_member_argument.getEmail()).isEqualTo(givenMemberJoinRequest.getEmail());
         assertThat(spyMemberRepository.save_member_argument.getProfileImage()).isEqualTo(givenMemberJoinRequest.getProfileImage());
-        assertThat(spyMemberRepository.save_member_argument.getNickName()).isEqualTo(givenMemberJoinRequest.getNickName());
+        assertThat(spyMemberRepository.save_member_argument.getNickname()).isEqualTo(givenMemberJoinRequest.getNickName());
         assertThat(spyMemberRepository.save_member_argument.getIdentifyToken()).isEqualTo(givenMemberJoinRequest.getIdentifyToken());
         assertThat(spyMemberRepository.save_member_argument.getStateMessage()).isEqualTo(givenMemberJoinRequest.getStateMessage());
     }
@@ -66,13 +66,13 @@ class MemberServiceImplTest {
     void getMember_returnValue() {
         long givenId = 1L;
         String givenEmail = "A_Email";
-        String givenNickName = "A_NickName";
+        String givenNickname = "A_Nickname";
         String givenProfileImage = "A_ProfileImage";
         String givenStateMessage = "A_StateMessage";
         spyMemberRepository.optionalMember = Optional.of(MemberFixture.anMember()
                 .id(givenId)
                 .email(givenEmail)
-                .nickName(givenNickName)
+                .nickname(givenNickname)
                 .profileImage(givenProfileImage)
                 .stateMessage(givenStateMessage)
                 .build());
@@ -80,7 +80,7 @@ class MemberServiceImplTest {
         MemberGetResponse result = memberService.getMember(givenId);
 
         assertThat(result.getEmail()).isEqualTo(givenEmail);
-        assertThat(result.getNickName()).isEqualTo(givenNickName);
+        assertThat(result.getNickname()).isEqualTo(givenNickname);
         assertThat(result.getProfileImage()).isEqualTo(givenProfileImage);
         assertThat(result.getStateMessage()).isEqualTo(givenStateMessage);
     }
