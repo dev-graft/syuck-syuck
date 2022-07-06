@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${DB_CONNECT_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
     dbcp2:
       validation-query: "SELECT 1"
@@ -34,14 +34,14 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
+            client-id: ${google.client-id}
+            client-secret: ${google.client-secret}
             scope:
               - profile
               - email
 
 support:
   jwt:
-    secret: ${JWT_SECRET}
+    secret: ${support.jwt.secret}
   auth:
-    redirect-url: ${REDIRECT-URL}
+    redirect-url: ${support.auth.redirect-url}

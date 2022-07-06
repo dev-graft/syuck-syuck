@@ -1,3 +1,6 @@
 FROM openjdk:11-jre-slim
+ENV profile default
+RUN apk add --no-cache tzdata
+ENV TZ Asia/Seoul
 COPY applications/app-demo/build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${profile}", "app.jar"]
