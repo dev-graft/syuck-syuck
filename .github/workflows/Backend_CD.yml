@@ -6,7 +6,7 @@ on:
 
 env:
   S3_BUCKET_NAME: devgraft-deploy
-  RESOURCE_PATH: ./src/main/resources/application.yaml
+  RESOURCE_PATH: ./applications/app-demo/src/main/resources/application-prod.yml
   CODE_DEPLOY_APPLICATION_NAME: devgraft-syuck-syuck-code-deploy
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: syuck-syuck-server
 
