@@ -23,6 +23,6 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         AuthResult authResult = authService.issuedMemberAuthToken(oAuth2User.getName());
         request.getSession().setAttribute("refresh", authResult.getRefresh());
-        response.sendRedirect(authProperties.getRedirectUrl() + "/auth/success?token=" + authResult.getAccess());
+        response.sendRedirect(authProperties.getRedirectUrl().concat("/auth/success?token="+ authResult.getAccess()));
     }
 }
