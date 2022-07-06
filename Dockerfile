@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:8-jdk-alpine
 ENV profile default
 RUN apk add --no-cache tzdata
 ENV TZ Asia/Seoul
