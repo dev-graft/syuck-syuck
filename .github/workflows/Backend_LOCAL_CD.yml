@@ -26,9 +26,9 @@ jobs:
       with:
         files: ${{ env.RESOURCE_PATH }}
       env:
-        spring.security.oauth2.client.registration.google.secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
         spring.security.oauth2.client.registration.google.client-id: ${{ secrets.GOOGLE_CLIENT_ID }}
-
+        spring.security.oauth2.client.registration.google.client-secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        
     - name: Build with Gradle
       run: |
         chmod +x ./gradlew
