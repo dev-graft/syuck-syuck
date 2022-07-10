@@ -1,0 +1,42 @@
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+    session:
+      timeout: 43200m
+      cookie:
+        max-age: 43200m
+        name: JSESSIONID
+        http-only: true
+spring:
+  datasource:
+    url: jdbc:h2:mem:test-db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: h2
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  h2:
+    console:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - profile
+              - email
+
+support:
+  jwt:
+    secret: hdrtsjytfhjretyrnrtfythfthbyfr
+  auth:
+    redirect-url: http://localhost:8080
