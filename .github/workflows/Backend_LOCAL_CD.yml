@@ -1,5 +1,5 @@
 
-name: Backend_CD
+name: Backend_LOCAL_CD
 on:
   push:
     branches: [ "main" ]
