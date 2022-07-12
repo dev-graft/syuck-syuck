@@ -1,9 +1,57 @@
+plugins {
+    id "org.asciidoctor.jvm.convert" version "3.2.0"
+}
+
+configurations {
+    asciidoctorExt
+}
+
 dependencies {
     implementation(project(':components:module-auth'))
     implementation(project(':components:module-member'))
+
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework:spring-tx'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
     implementation 'mysql:mysql-connector-java:8.0.28'
+}
+
+ext {
+    snippetDir = file('build/generated-snippets')
+}
+
+test {
+    useJUnitPlatform()
+    outputs.dir snippetDir
+}
+
+asciidoctor {
+    System.out.println("log######################################")
+    configurations 'asciidoctorExt'
+    inputs.dir snippetDir
+    dependsOn test
+}
+
+asciidoctor.doFirst {
+    System.out.println("log@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    delete file('src/main/resources/static/docs')
+}
+
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+
+    from file("build/docs/asciidoc/")
+    into file("src/main/resources/static/docs")
+}
+
+bootJar {
+    dependsOn copyDocument
+}
+
+bootRun {
+
 }
