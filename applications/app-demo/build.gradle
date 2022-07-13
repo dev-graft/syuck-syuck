@@ -30,18 +30,19 @@ test {
 }
 
 asciidoctor {
-    System.out.println("log######################################")
+    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ [asciidoctor] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     configurations 'asciidoctorExt'
     inputs.dir snippetDir
     dependsOn test
 }
 
 asciidoctor.doFirst {
-    System.out.println("log@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ [asciidoctor.doFirst] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     delete file('src/main/resources/static/docs')
 }
 
 task copyDocument(type: Copy) {
+    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ [copyDocument] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     dependsOn asciidoctor
 
     from file("build/docs/asciidoc/")
@@ -49,9 +50,11 @@ task copyDocument(type: Copy) {
 }
 
 bootJar {
+    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ [bootJar] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     dependsOn copyDocument
 }
 
 bootRun {
+    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ [bootRun] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
 }

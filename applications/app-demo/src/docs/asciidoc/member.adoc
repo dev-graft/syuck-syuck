@@ -1,0 +1,11 @@
+= Member APIs
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== Member 조회
+
+operation::member-integration-test/get-my-profile[snippets='curl-request,http-request,http-response']
