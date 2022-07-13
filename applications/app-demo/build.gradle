@@ -38,7 +38,7 @@ asciidoctor {
 
 asciidoctor.doFirst {
     System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ [asciidoctor.doFirst] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    delete file('src/main/resources/static/docs')
+    delete files('src/main/resources/static/docs')
 }
 
 task copyDocument(type: Copy) {
@@ -56,5 +56,4 @@ bootJar {
 
 bootRun {
     System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ [bootRun] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-
 }
