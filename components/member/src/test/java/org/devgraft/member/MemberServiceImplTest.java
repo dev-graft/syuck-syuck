@@ -100,4 +100,5 @@ class MemberServiceImplTest {
         assertThat(spyMemberRepository.optionalMember.get().getNickname()).isEqualTo("nickname");
         assertThat(spyMemberRepository.optionalMember.get().getStateMessage()).isEqualTo("stateMessage");
     }
+
 }

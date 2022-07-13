@@ -7,6 +7,7 @@ import org.devgraft.auth.SpyAuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,5 +47,18 @@ class MemberV1ApiTest {
                 .andExpect(jsonPath("$.profileImage", equalTo("profileImage")))
                 .andExpect(jsonPath("$.stateMessage", equalTo("stateMessage")))
         ;
+    }
+
+    @DisplayName("자신의 프로필 정보 업데이트")
+    @Test
+    void updateMyProfile() throws Exception {
+        spyAuthService.exportAuthorization_returnValue = Optional.of(AuthResult.of("access", "refresh"));
+        spyAuthService.verity_returnValue = MemberCredentials.of(2L, "USER");
+        spyMemberService.getMember_returnValue = MemberGetResponse.of("email", "nickname", "profileImage", "stateMessage");
+
+        mockMvc.perform(patch("/api/v1/members/me")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"nickname\":\"nicknameUpdate\", \"stateMessage\": \"stateMessageUpdate\"}"))
+                .andExpect(status().isOk());
     }
 }
