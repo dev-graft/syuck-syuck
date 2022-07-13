@@ -9,3 +9,7 @@
 == Member 조회
 
 operation::member-integration-test/get-my-profile[snippets='curl-request,http-request,http-response']
+
+== Member 정보 업데이트
+
+operation::member-integration-test/update-my-profile[snippets='curl-request,http-request,http-response']
