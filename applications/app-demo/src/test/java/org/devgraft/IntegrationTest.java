@@ -1,4 +1,4 @@
-package org.devgraft.demo;
+package org.devgraft;
 
 import org.devgraft.auth.AuthResult;
 import org.devgraft.auth.AuthService;

@@ -1,6 +1,6 @@
-package org.devgraft.demo.member;
+package org.devgraft.member;
 
-import org.devgraft.demo.IntegrationTest;
+import org.devgraft.IntegrationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
