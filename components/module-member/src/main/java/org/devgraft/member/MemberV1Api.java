@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("api")
+@RequestMapping("api/v1/members")
 @RequiredArgsConstructor
 @RestController
-public class MemberApi {
+public class MemberV1Api {
     private final MemberService memberService;
 
-    @GetMapping("/v1/members/me")
+    @GetMapping("me")
     public MemberGetResponse getMyProfile(@Credentials MemberCredentials credentials) {
         return memberService.getMember(credentials.getMemberId());
     }

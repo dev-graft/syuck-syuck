@@ -49,14 +49,14 @@ class MemberServiceImplTest {
     @DisplayName("가입/패스")
     @Test
     void join_passesMemberToRepository() {
-        MemberJoinRequest givenMemberJoinRequest = MemberJoinRequest.of("email", "profileImage", "nickName", "identifyToken", "stateMessage");
+        MemberJoinRequest givenMemberJoinRequest = MemberJoinRequest.of("email", "profileImage", "nickname", "identifyToken", "stateMessage");
 
         memberService.join(givenMemberJoinRequest);
 
         assertThat(spyMemberRepository.save_member_argument).isNotNull();
         assertThat(spyMemberRepository.save_member_argument.getEmail()).isEqualTo(givenMemberJoinRequest.getEmail());
         assertThat(spyMemberRepository.save_member_argument.getProfileImage()).isEqualTo(givenMemberJoinRequest.getProfileImage());
-        assertThat(spyMemberRepository.save_member_argument.getNickname()).isEqualTo(givenMemberJoinRequest.getNickName());
+        assertThat(spyMemberRepository.save_member_argument.getNickname()).isEqualTo(givenMemberJoinRequest.getNickname());
         assertThat(spyMemberRepository.save_member_argument.getIdentifyToken()).isEqualTo(givenMemberJoinRequest.getIdentifyToken());
         assertThat(spyMemberRepository.save_member_argument.getStateMessage()).isEqualTo(givenMemberJoinRequest.getStateMessage());
     }
@@ -83,5 +83,21 @@ class MemberServiceImplTest {
         assertThat(result.getNickname()).isEqualTo(givenNickname);
         assertThat(result.getProfileImage()).isEqualTo(givenProfileImage);
         assertThat(result.getStateMessage()).isEqualTo(givenStateMessage);
+    }
+
+    @DisplayName("회원 정보 업데이트")
+    @Test
+    void updateMember_test() {
+        Long givenMemberId = 0L;
+        MemberUpdateRequest givenRequest = MemberUpdateRequest.of("nickname", "stateMessage");
+        spyMemberRepository.optionalMember = Optional.of(MemberFixture.anMember()
+                        .nickname("test_nickname")
+                        .stateMessage("testMessage")
+                .build());
+
+        memberService.updateMember(givenMemberId, givenRequest);
+
+        assertThat(spyMemberRepository.optionalMember.get().getNickname()).isEqualTo("nickname");
+        assertThat(spyMemberRepository.optionalMember.get().getStateMessage()).isEqualTo("stateMessage");
     }
 }

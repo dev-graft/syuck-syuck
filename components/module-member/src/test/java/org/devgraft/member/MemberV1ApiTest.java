@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class MemberApiTest {
+class MemberV1ApiTest {
     private SpyMemberService spyMemberService;
     private SpyAuthService spyAuthService;
     MockMvc mockMvc;
@@ -26,7 +26,7 @@ class MemberApiTest {
     void setUp() {
         spyMemberService = new SpyMemberService();
         spyAuthService = new SpyAuthService();
-        mockMvc = MockMvcBuilders.standaloneSetup(new MemberApi(spyMemberService))
+        mockMvc = MockMvcBuilders.standaloneSetup(new MemberV1Api(spyMemberService))
                 .setCustomArgumentResolvers(new CredentialsResolver(spyAuthService))
                 .build();
     }
