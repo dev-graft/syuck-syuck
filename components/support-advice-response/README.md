@@ -9,6 +9,6 @@
 - @EnableFlux 호출 시 에러 발생
 ### reactive
 - 동작 시 @EnableReactiveResponse 어노테이션 호출 필요
-- @EnableWebMvc
+- @EnableWebMvc 호출 시 에러 발생
 - application.properties 내용 추가 spring.main.allow-bean-definition-overriding=true
 - application.properties 내용 추가  spring.main.web-application-type=REACTIVE
