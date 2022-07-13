@@ -40,10 +40,17 @@ public class Member extends BaseEntity {
         this.stateMessage = stateMessage;
     }
 
-    public static Member of(final String email, final String profileImage, final String nickName, final String identifyToken, final String stateMessage) {
+    public static Member of(final String email, final String profileImage, final String nickname, final String identifyToken, final String stateMessage) {
         Assert.notNull(email, "email must not be null");
-        Assert.notNull(nickName, "nickName must not be null");
+        Assert.notNull(nickname, "nickname must not be null");
         Assert.notNull(identifyToken, "identifyToken must not be null");
-        return new Member(null, email, profileImage, nickName, identifyToken, stateMessage);
+        return new Member(null, email, profileImage, nickname, identifyToken, stateMessage);
+    }
+
+    public void updateProfile(final String nickname, final String stateMessage) {
+        Assert.notNull(nickname, "nickName must not be null");
+        Assert.notNull(stateMessage, "stateMessage must not be null");
+        this.nickname = nickname;
+        this.stateMessage = stateMessage;
     }
 }
