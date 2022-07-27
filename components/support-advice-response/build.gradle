@@ -3,6 +3,5 @@ dependencies {
     implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation 'org.springframework:spring-webflux:5.0.1.RELEASE'
     implementation 'org.springframework:spring-webmvc:5.3.20'
-    implementation 'org.springframework:spring-webflux:5.0.1.RELEASE'
     implementation(project(":components:support-mapper"))
 }

@@ -40,8 +40,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void updateMember(Long memberId, MemberUpdateRequest request) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(RuntimeException::new);
-        member.updateProfile(request.getNickname(), request.getStateMessage());
+        memberRepository.findById(memberId)
+                .orElseThrow(RuntimeException::new)
+                .updateProfile(request.getNickname(), request.getStateMessage());
     }
 }
